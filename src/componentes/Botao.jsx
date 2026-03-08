@@ -1,21 +1,22 @@
+// Botao.jsx
 import "./Botao.css";
 
-export default function Button({ children, variant = "primary", onClick }) {
-
-  const baseStyle =
-    "px-6 py-3 rounded-lg font-medium transition";
-
-  const variants = {
-    primary: "bg-purple-500 text-white hover:bg-purple-600",
-    outline: "border border-purple-500 text-purple-500 hover:bg-purple-50",
-  };
-
+export default function Botao({ children, onClick, variant = "primary", ...props }) {
   return (
-    <button
-      onClick={onClick}
-      className={`${baseStyle} ${variants[variant]}`}
-    >
+    <button className={`btn btn-${variant}`} onClick={onClick} {...props}>
       {children}
     </button>
   );
+}
+
+export function BotaoPrimario({ children, onClick, ...props }) {
+  return <Botao variant="primario" onClick={onClick} {...props}>{children}</Botao>;
+}
+
+export function BotaoSecundario({ children, onClick, ...props }) {
+  return <Botao variant="secundario" onClick={onClick} {...props}>{children}</Botao>;
+}
+
+export function BotaoCard({children, onClick, ...props}) {
+  return <Botao variant="card" onClick={onClick} {...props}>{children}</Botao>;
 }
