@@ -17,6 +17,6 @@ export function BotaoSecundario({ children, onClick, ...props }) {
   return <Botao variant="secundario" onClick={onClick} {...props}>{children}</Botao>;
 }
 
-export function BotaoCard({children, onClick, ...props}) {
+export function BotaoCard({ children, onClick, ...props }) {
   return <Botao variant="card" onClick={onClick} {...props}>{children}</Botao>;
 }
