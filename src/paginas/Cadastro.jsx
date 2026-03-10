@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { criarUsuario } from "../services/api";
+import { criarUsuario } from "../api/api";
 
 function Cadastro() {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
