@@ -1,8 +1,14 @@
 import { useForm } from "react-hook-form";
 import { criarUsuario } from "../api/api";
+import { BotaoPrimario, BotaoSecundario } from "../componentes/Botao";
+import Input from "../componentes/Input";
+import Formulario from "../componentes/Formulario";
+import { useNavigate } from "react-router-dom";
+
 
 function Cadastro() {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const navigate = useNavigate();
 
     async function cadastrar(dados) {
         try {
@@ -21,57 +27,78 @@ function Cadastro() {
 
     return (
         <div>
-            <h2>Faça seu Cadastro</h2>
+            <Formulario titulo="Faça seu Cadastro" onSubmit={handleSubmit(cadastrar)}>
 
-            <form onSubmit={handleSubmit(cadastrar)}>
-                <div>
-                    <input
-                        placeholder="Nome"
-                        {...register("nome", {
+                <Input
+                    label="Nome"
+                    name="nome"
+                    placeholder="Digite seu nome"
+                    register={(name) =>
+                        register(name, {
                             required: "O nome é obrigatório",
                             minLength: { value: 3, message: "Mínimo 3 caracteres" }
-                        })}
-                    />
-                    {errors.nome && <p style={{ color: "red" }}>{errors.nome.message}</p>}
-                </div>
-                <div>
-                    <input
-                        placeholder="Email"
-                        {...register("email", {
-                            required: "O email é obrigatório",
-                            pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Email inválido" }
-                        })}
-                    />
-                    {errors.email && <p style={{ color: "red" }}>{errors.email.message}</p>}
-                </div>
+                        })
+                    }
+                    error={errors.nome}
+                />
 
-                <div>
-                    <input
-                        type="password"
-                        placeholder="Senha"
-                        {...register("senha", {
+                <Input
+                    label="Email"
+                    name="email"
+                    placeholder="Digite seu email"
+                    register={(name) =>
+                        register(name, {
+                            required: "O email é obrigatório",
+                            pattern: {
+                                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                message: "Email inválido"
+                            }
+                        })
+                    }
+                    error={errors.email}
+                />
+
+                <Input
+                    label="Senha"
+                    name="senha"
+                    type="password"
+                    placeholder="Digite sua senha"
+                    register={(name) =>
+                        register(name, {
                             required: "A senha é obrigatória",
                             minLength: { value: 6, message: "Mínimo 6 caracteres" }
-                        })}
-                    />
-                    {errors.senha && <p style={{ color: "red" }}>{errors.senha.message}</p>}
-                </div>
+                        })
+                    }
+                    error={errors.senha}
+                />
 
-                <div>
-                    <input
-                        placeholder="CPF"
-                        {...register("cpf", {
+                <Input
+                    label="CPF"
+                    name="cpf"
+                    placeholder="Digite seu CPF"
+                    register={(name) =>
+                        register(name, {
                             required: "O CPF é obrigatório",
-                            pattern: { value: /^\d{11}$/, message: "CPF deve ter 11 dígitos" }
-                        })}
-                    />
-                    {errors.cpf && <p style={{ color: "red" }}>{errors.cpf.message}</p>}
-                </div>
+                            pattern: {
+                                value: /^\d{11}$/,
+                                message: "CPF deve ter 11 dígitos"
+                            }
+                        })
+                    }
+                    error={errors.cpf}
+                />
 
-                <button type="submit">
-                    Cadastrar
-                </button>
-            </form>
+                <div className="flex gap-4 mt-4">
+                    <BotaoPrimario type="submit">
+                        Cadastrar
+                    </BotaoPrimario>
+
+                    <BotaoSecundario onClick={() => navigate("/")}>
+                        Voltar
+                    </BotaoSecundario>
+                </div>
+                
+            </Formulario>
         </div>
     )
 

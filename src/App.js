@@ -3,26 +3,25 @@ import "./App.css";
 import "./componentes/Rodape.css";
 import Header from "./componentes/Header";
 import Rodape from "./componentes/Rodape";
-import BookCard from "./componentes/Card"
 import Cadastro from "./paginas/Cadastro";
 
 import { BotaoCard, BotaoPrimario, BotaoSecundario } from "./componentes/Botao";
+import Inicio from "./paginas/Inicio";
 
 function App() {
-  
+
   return (
     <div>
       <Header />
 
-      <BotaoCard>Ola</BotaoCard>
-      <BotaoPrimario>Primário</BotaoPrimario>
-      <BotaoSecundario>Secundário</BotaoSecundario>
-     
-      <Rodape />
+      <main>
+        <Routes>
+          <Route path="/" element={<Inicio />}></Route>
+          <Route path="/cadastro" element={<Cadastro />} />
+        </Routes>
+      </main>
 
-      <Routes>
-        <Route path="/cadastro" element={<Cadastro />} />
-      </Routes>
+      <Rodape />
     </div>
   );
 }
