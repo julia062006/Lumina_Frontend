@@ -1,5 +1,3 @@
-
-
 export default function Rodape() {
     return (
         <footer className="footer">
