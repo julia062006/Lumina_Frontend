@@ -6,9 +6,10 @@ import Formulario from "../componentes/Formulario";
 import { useNavigate } from "react-router-dom";
 
 
-function Cadastro() {
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+function CadastroUsuario() {
+    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
     const navigate = useNavigate();
+    const senha = watch("senha");
 
     async function cadastrar(dados) {
         try {
@@ -73,6 +74,21 @@ function Cadastro() {
                 />
 
                 <Input
+                    label="Confirmar Senha"
+                    name="confirmarSenha"
+                    type="password"
+                    placeholder="Confirme sua senha"
+                    register={(name) =>
+                        register(name, {
+                            required: "Confirme sua senha",
+                            validate: (value) =>
+                                value === senha || "As senhas não são iguais!"
+                        })
+                    }
+                    error={errors.confirmarSenha}
+                />
+
+                <Input
                     label="CPF"
                     name="cpf"
                     placeholder="Digite seu CPF"
@@ -97,11 +113,11 @@ function Cadastro() {
                         Voltar
                     </BotaoSecundario>
                 </div>
-                
+
             </Formulario>
         </div>
     )
 
 }
 
-export default Cadastro;
+export default CadastroUsuario;

@@ -3,7 +3,7 @@ import "./App.css";
 import "./componentes/Rodape.css";
 import Header from "./componentes/Header";
 import Rodape from "./componentes/Rodape";
-import Cadastro from "./paginas/Cadastro";
+import CadastroUsuario from "./paginas/CadastroUsuario";
 import CadastrarAutor from "./paginas/CadastroAutor";
 
 import Inicio from "./paginas/Inicio";
@@ -17,7 +17,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Inicio />}></Route>
-          <Route path="/cadastro" element={<Cadastro />} />
+          <Route path="/cadastroUsuario" element={<CadastroUsuario />} />
           <Route path="/cadastroAutor" element={<CadastrarAutor/>}/>
         </Routes>
       </main>

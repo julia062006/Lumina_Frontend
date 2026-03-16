@@ -11,7 +11,7 @@ function Inicio() {
             <div className="flex gap-4 mt-6">
                 <BotaoPrimario>Explorar Livros</BotaoPrimario>
 
-                <Link to="/cadastro">
+                <Link to="/cadastroUsuario">
                     <BotaoSecundario>Criar Conta</BotaoSecundario>
                 </Link>
             </div>

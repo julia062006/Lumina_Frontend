@@ -1,5 +1,7 @@
 import "./Header.css";
 import logo from "../imagens/LogoCelularLivro.png";
+import {User, ShoppingCart} from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Header() {
     return (
@@ -14,6 +16,14 @@ export default function Header() {
                 <a href="#biblioteca">Biblioteca</a>
                 <a href="#categorias">Categorias</a>
                 <a href="#autores">Autores</a>
+
+                <Link to="/entrar">
+                    <User />
+                </Link>
+
+                <Link>
+                    <ShoppingCart/>
+                </Link>
             </nav>
         </header>
     );
