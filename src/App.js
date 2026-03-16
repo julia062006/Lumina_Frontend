@@ -4,8 +4,8 @@ import "./componentes/Rodape.css";
 import Header from "./componentes/Header";
 import Rodape from "./componentes/Rodape";
 import Cadastro from "./paginas/Cadastro";
+import CadastrarAutor from "./paginas/CadastroAutor";
 
-import { BotaoCard, BotaoPrimario, BotaoSecundario } from "./componentes/Botao";
 import Inicio from "./paginas/Inicio";
 
 function App() {
@@ -18,6 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Inicio />}></Route>
           <Route path="/cadastro" element={<Cadastro />} />
+          <Route path="/cadastroAutor" element={<CadastrarAutor/>}/>
         </Routes>
       </main>
 

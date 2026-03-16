@@ -11,3 +11,13 @@ export function criarUsuario(dados){
         body: JSON.stringify(dados)
     });
 }
+
+export async function criarAutor(dados) {
+
+    const resposta = await fetch(API + "/autores", {
+        method: "POST",
+        body: dados
+    });
+
+    return resposta;
+}
