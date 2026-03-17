@@ -5,6 +5,7 @@ import Header from "./componentes/Header";
 import Rodape from "./componentes/Rodape";
 import CadastroUsuario from "./paginas/CadastroUsuario";
 import CadastrarAutor from "./paginas/CadastroAutor";
+import Entrar from "./paginas/Entrar";
 
 import Inicio from "./paginas/Inicio";
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<Inicio />}></Route>
           <Route path="/cadastroUsuario" element={<CadastroUsuario />} />
           <Route path="/cadastroAutor" element={<CadastrarAutor/>}/>
+          <Route path="/entrar" element={<Entrar />} />
         </Routes>
       </main>
 

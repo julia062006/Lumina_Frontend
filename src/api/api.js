@@ -21,3 +21,11 @@ export async function criarAutor(dados) {
 
     return resposta;
 }
+
+export async function loginUsuario(dados) {
+    return fetch(API + "/entrar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dados)
+    });
+}

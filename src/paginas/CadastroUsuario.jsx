@@ -25,6 +25,16 @@ function CadastroUsuario() {
             console.log("Erro ao conectar com o servidor");
         }
     }
+    function mascaraCPF(valor) {
+        valor = valor.replace(/\D/g, "");
+        valor = valor.slice(0, 11);
+
+        valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+        valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+        valor = valor.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+
+        return valor;
+    }
 
     return (
         <div>
@@ -94,13 +104,12 @@ function CadastroUsuario() {
                     placeholder="Digite seu CPF"
                     register={(name) =>
                         register(name, {
-                            required: "O CPF é obrigatório",
-                            pattern: {
-                                value: /^\d{11}$/,
-                                message: "CPF deve ter 11 dígitos"
-                            }
+                            required: "O CPF é obrigatório"
                         })
                     }
+                    onChange={(e) => {
+                        e.target.value = mascaraCPF(e.target.value);
+                    }}
                     error={errors.cpf}
                 />
 
