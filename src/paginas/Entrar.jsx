@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { BotaoPrimario, BotaoSecundario } from "../componentes/Botao";
 import Input from "../componentes/Input";
 import Formulario from "../componentes/Formulario";
-import { loginUsuario } from "../api/api";
+import { loginUsuario } from "../services/api";
 
 function Entrar() {
 
