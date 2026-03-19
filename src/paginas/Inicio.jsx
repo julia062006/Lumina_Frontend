@@ -17,7 +17,7 @@ function Inicio() {
     };
 
     return (
-        <div className="p-10">
+        <div     className="p-10 min-h-screen bg-no-repeat bg-right bg-contain" style={{ backgroundImage: `url(${bg})` }}>
             <h1 className="text-3xl font-bold">Ilumine sua Leitura.</h1>
 
             <p className="mt-4 text-gray-600">
@@ -31,6 +31,7 @@ function Inicio() {
                     <BotaoSecundario>Criar Conta</BotaoSecundario>
                 </Link>
             </div>
+
 
             {/* TESTE DO CARD */}
             <div className="mt-10 w-64">
