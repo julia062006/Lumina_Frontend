@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { criarUsuario } from "../api/api";
+import { criarUsuario } from "../services/api";
 import { BotaoPrimario, BotaoSecundario } from "../componentes/Botao";
 import Input from "../componentes/Input";
 import Formulario from "../componentes/Formulario";
