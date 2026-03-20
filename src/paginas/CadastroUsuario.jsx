@@ -4,6 +4,7 @@ import { BotaoPrimario, BotaoSecundario } from "../componentes/Botao";
 import Input from "../componentes/Input";
 import Formulario from "../componentes/Formulario";
 import { useNavigate } from "react-router-dom";
+import InputSenha from "../componentes/InputSenha";
 
 
 function CadastroUsuario() {
@@ -21,6 +22,7 @@ function CadastroUsuario() {
 
             alert("Cadastro realizado com sucesso!");
             reset();
+            navigate("/entrar");
         } catch (erro) {
             console.log("Erro ao conectar com o servidor");
         }
@@ -69,7 +71,7 @@ function CadastroUsuario() {
                     error={errors.email}
                 />
 
-                <Input
+                <InputSenha
                     label="Senha"
                     name="senha"
                     type="password"
@@ -83,7 +85,7 @@ function CadastroUsuario() {
                     error={errors.senha}
                 />
 
-                <Input
+                <InputSenha
                     label="Confirmar Senha"
                     name="confirmarSenha"
                     type="password"
@@ -113,14 +115,15 @@ function CadastroUsuario() {
                     error={errors.cpf}
                 />
 
-                <div className="flex gap-4 mt-4">
+                <div className="flex gap-4 mt-4 items-center">
                     <BotaoPrimario type="submit">
                         Cadastrar
                     </BotaoPrimario>
 
-                    <BotaoSecundario onClick={() => navigate("/")}>
-                        Voltar
+                    <BotaoSecundario onClick={() => navigate("/entrar")}>
+                        Já tenho uma conta
                     </BotaoSecundario>
+
                 </div>
 
             </Formulario>

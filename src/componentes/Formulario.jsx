@@ -1,6 +1,6 @@
 function Formulario({ titulo, onSubmit, children }) {
   return (
-    <div className="flex justify-center min-h-screen bg-gray-100 py-10">
+    <div className="flex justify-center bg-gray-100 py-10">
 
       <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-lg">
 

@@ -4,6 +4,7 @@ import { BotaoPrimario, BotaoSecundario } from "../componentes/Botao";
 import Input from "../componentes/Input";
 import Formulario from "../componentes/Formulario";
 import { loginUsuario } from "../services/api";
+import InputSenha from "../componentes/InputSenha";
 
 function Entrar() {
 
@@ -49,7 +50,7 @@ function Entrar() {
                     error={errors.email}
                 />
 
-                <Input
+                <InputSenha
                     label="Senha"
                     name="senha"
                     type="password"
