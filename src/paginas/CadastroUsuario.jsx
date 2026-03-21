@@ -5,6 +5,7 @@ import Input from "../componentes/Input";
 import Formulario from "../componentes/Formulario";
 import { useNavigate } from "react-router-dom";
 import InputSenha from "../componentes/InputSenha";
+import Swal from "sweetalert2";
 
 
 function CadastroUsuario() {
@@ -20,13 +21,18 @@ function CadastroUsuario() {
                 return
             }
 
-            alert("Cadastro realizado com sucesso!");
+            Swal.fire({
+                icon: "success",
+                title: "Cadastro realizado com sucesso!"
+            });
+
             reset();
             navigate("/entrar");
         } catch (erro) {
             console.log("Erro ao conectar com o servidor");
         }
     }
+    
     function mascaraCPF(valor) {
         valor = valor.replace(/\D/g, "");
         valor = valor.slice(0, 11);

@@ -5,6 +5,7 @@ import Input from "../componentes/Input";
 import Formulario from "../componentes/Formulario";
 import { loginUsuario } from "../services/api";
 import InputSenha from "../componentes/InputSenha";
+import Swal from "sweetalert2";
 
 function Entrar() {
 
@@ -12,27 +13,39 @@ function Entrar() {
     const navigate = useNavigate();
 
     async function entrar(dados) {
-    try {
+        try {
 
-        const resposta = await loginUsuario(dados);
+            const resposta = await loginUsuario(dados);
 
-        const resultado = await resposta.json();
+            if (!resposta.ok) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Erro",
+                    text: resposta.data.mensagem
+                });
+                return;
+            }
 
-        if (!resposta.ok) {
-            alert(resultado.mensagem);
-            return;
+            localStorage.setItem("token", resposta.data.token);
+            localStorage.setItem("usuario", JSON.stringify(resposta.data.usuario));
+
+            Swal.fire({
+                icon: "success",
+                title: "Login realizado com sucesso!"
+            });
+
+            navigate("/");
+
+        } catch (erro) {
+            console.log("Erro ao conectar com o servidor");
+
+            Swal.fire({
+                icon: "error",
+                title: "Erro",
+                text: "Erro ao conectar com o servidor"
+            });
         }
-
-        localStorage.setItem("usuario", JSON.stringify(resultado.usuario));
-
-        alert("Login realizado com sucesso!");
-
-        navigate("/");
-
-    } catch (erro) {
-        console.log("Erro ao conectar com o servidor");
     }
-}
 
     return (
         <div>

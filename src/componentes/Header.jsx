@@ -1,9 +1,21 @@
 import "./Header.css";
 import logo from "../imagens/LogoCelularLivro.png";
-import {User, ShoppingCart} from "lucide-react";
-import { Link } from "react-router-dom";
+import { User, ShoppingCart, LogOut } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Header() {
+
+    const navigate = useNavigate();
+    const token = localStorage.getItem("token");
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
+
+    function sair() {
+        localStorage.removeItem("token");
+        localStorage.removeItem("usuario");
+
+        navigate("/entrar");
+    }
+
     return (
         <header className="header">
             <div className="logo">
@@ -17,12 +29,22 @@ export default function Header() {
                 <a href="#categorias">Categorias</a>
                 <a href="#autores">Autores</a>
 
-                <Link to="/entrar">
-                    <User />
-                </Link>
+
+                {token ? (
+                    <>
+                        <button onClick={sair}>
+                            <LogOut />
+                        </button>
+                    </>
+                ) : (
+                    <Link to="/entrar">
+                        <User />
+                    </Link>
+                )}
+
 
                 <Link>
-                    <ShoppingCart/>
+                    <ShoppingCart />
                 </Link>
             </nav>
         </header>

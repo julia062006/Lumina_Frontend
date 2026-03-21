@@ -1,21 +1,58 @@
 const API = "http://localhost:3000";
 
-export function getUsuarios(){
-    return fetch(API + "/usuarios");
+async function tratarResposta(resposta) {
+    let data;
+
+    try {
+        data = await resposta.json();
+    } catch {
+        data = { mensagem: "Erro inesperado" };
+    }
+
+    return {
+        ok: resposta.ok,
+        status: resposta.status,
+        data
+    };
 }
 
-export function criarUsuario(dados){
-    return fetch(API + "/usuarios", {
+function getHeaders() {
+    const token = localStorage.getItem("token");
+
+    return {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+    };
+}
+
+export async function getUsuarios() {
+     const token = localStorage.getItem("token");
+
+    const resposta = await fetch(API + "/usuarios", {
+        headers: {
+            headers: getHeaders()
+        }
+    });
+
+    return tratarResposta(resposta);
+}
+
+export async function criarUsuario(dados) {
+    const resposta = await fetch(API + "/usuarios", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dados)
     });
+
+    return tratarResposta(resposta);
 }
 
 export async function criarAutor(dados) {
-
     const resposta = await fetch(API + "/autores", {
         method: "POST",
+        headers: {
+            Authorization: "Bearer " + localStorage.getItem("token")
+        },
         body: dados
     });
 
@@ -23,9 +60,11 @@ export async function criarAutor(dados) {
 }
 
 export async function loginUsuario(dados) {
-    return fetch(API + "/entrar", {
+    const resposta = await fetch(API + "/entrar", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dados)
     });
+
+    return tratarResposta(resposta);
 }
