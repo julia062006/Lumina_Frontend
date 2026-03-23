@@ -1,66 +1,115 @@
 import { Link } from "react-router-dom";
 import { BotaoPrimario, BotaoSecundario } from "../componentes/Botao";
-import Card from "../componentes/Card";
 import bg from "../imagens/Livros2.png";
-
+import React, { useEffect, useState } from "react";
+import { getCategorias } from "../services/api";
+import { useNavigate } from "react-router-dom";
+import Card from "../componentes/Card";
 
 function Inicio() {
 
-    const bookTeste = {
-        image: "https://picsum.photos/300/400",
-        title: "Livro Teste",
-        author: "Autor Teste",
-        description: "Esse é apenas um livro para testar o card.",
-        price: 29.90
-    };
 
-    const handleAddToCart = (book) => {
-        console.log("Adicionado:", book);
-    };
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+    const [livrosDestaque, setLivrosDestaque] = useState([]);
+
+    useEffect(() => {
+        async function carregarLivros() {
+            try {
+                const res = await fetch("http://localhost:3000/categoria");
+                const data = await res.json();
+
+                // filtra apenas os destaques
+                const destaques = data.filter(livro => livro.destaque === true);
+
+                setLivrosDestaque(destaques);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        carregarLivros();
+    }, []);
 
     return (
-        <main className="">
-            <div className="p-10 min-h-scren bg-no-repeat bg-righ "
+        <main>
+            <div
+                className="p-10 min-h-screen bg-no-repeat"
                 style={{
-                    backgroundImage: `url(${bg})`, backgroundSize: "1000px", backgroundPosition: "right 35px"
-                    
-                     // 👈 aumenta aqui
-                  
-                }}>
+                    backgroundImage: `url(${bg})`,
+                    backgroundSize: "1000px",
+                    backgroundPosition: "right 35px"
+                }}
+            >
                 <h1 className="text-5xl lg:text-6xl font-medium leading-tight tracking-tight">
                     Ilumine sua <br />
                     <span style={{ color: 'var(--lumina-purple)' }}>Leitura.</span>
                 </h1>
 
-                <p className="text-lg text-muted-foreground max-w-lg gap-2 mt-4">
+                <p className="text-lg text-muted-foreground max-w-lg mt-4">
                     Mais do que uma plataforma, a Lumina é o seu portal para conhecimento, imaginação e descoberta.
                 </p>
-                <p className="text-lg text-muted-foreground max-w-lg">
-                    Acesse milhares de livros, leia no seu ritmo e em qualquer lugar.
-                </p>
-                <p className="text-lg text-muted-foreground max-w-lg">
-                    Descubra novas histórias, aprenda e se inspire todos os dias.
-                </p>
-
-
 
                 <div className="flex gap-4 mt-6">
-                    <BotaoPrimario>Explorar Livros</BotaoPrimario>
+                    <BotaoPrimario onClick={() => navigate("/biblioteca")}>
+                        Explorar Livros
+                    </BotaoPrimario>
 
                     <Link to="/cadastroUsuario">
                         <BotaoSecundario>Criar Conta</BotaoSecundario>
                     </Link>
                 </div>
 
+                <section id="categoria" className="py-16 bg-muted/30 mt-10">
+                    <div className="container mx-auto px-6 lg:px-8">
+                        <div className="text-center mb-12">
+                            <h2 className="text-3xl lg:text-4xl font-medium mb-4">
+                                Explore por Categoria
+                            </h2>
+                        </div>
 
-                {/* TESTE DO CARD 
-            <div className="mt-10 w-64">
-                <Card
-                    book={bookTeste}
-                    onAddToCart={handleAddToCart}
-                />
-            </div> */}
+                        {loading ? (
+                            <p className="text-center">Carregando...</p>
+                        ) : (
+                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                                {Array.isArray(categories) && categories.map((category) => (
+                                    <button
+                                        key={category.id_categoria}
+                                        onClick={() => navigate(`/biblioteca?categoria=${category.id_categoria}`)}
+                                        className="group p-6 rounded-2xl bg-white border border-border/40 transition-all hover:shadow-lg hover:-translate-y-1"
+                                    >
+                                        <h3 className="font-medium group-hover:text-[var(--lumina-purple)] transition-colors">
+                                            {category.nome}
+                                        </h3>
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </section>
 
+                <section id="Destaque" className="py-16 bg-muted/30 mt-10">
+                    <div className="container mx-auto px-6 lg:px-8">
+                        <div className="text-center mb-12">
+                            <h2 className="text-3xl lg:text-4xl font-medium mb-4">
+                                Livros em Destaque, olhar conversa chat Fluxo API e categorias
+                            </h2>
+                        </div>
+
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                            {livrosDestaque.map((livro) => (
+                                <Card
+                                    key={livro.id}
+                                    titulo={livro.titulo}
+                                    autor={livro.autor}
+                                    imagem={livro.imagem}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                </section>
+                
             </div>
         </main>
     );

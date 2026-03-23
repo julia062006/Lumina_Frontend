@@ -4,15 +4,17 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-
+import { UsuarioProvider } from './contexto/UsuarioContexto';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-   <BrowserRouter>
-            <App/>
-        </BrowserRouter>
+    <UsuarioProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </UsuarioProvider>
   </React.StrictMode>
 );
 

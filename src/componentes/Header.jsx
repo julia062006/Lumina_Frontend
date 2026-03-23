@@ -1,20 +1,13 @@
 import "./Header.css";
 import logo from "../imagens/LogoCelularLivro.png";
-import { User, ShoppingCart, LogOut } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { User, ShoppingCart } from "lucide-react";
+import { Link } from "react-router-dom";
+import { BotaoSecundario } from "./Botao";
+import { useUsuario } from "../contexto/UsuarioContexto";
 
 export default function Header() {
-
-    const navigate = useNavigate();
-    const token = localStorage.getItem("token");
-    const usuario = JSON.parse(localStorage.getItem("usuario"));
-
-    function sair() {
-        localStorage.removeItem("token");
-        localStorage.removeItem("usuario");
-
-        navigate("/entrar");
-    }
+   
+    const { token } = useUsuario();
 
     return (
         <header className="header">
@@ -23,22 +16,22 @@ export default function Header() {
                 <h1 className="logoTitulo">LUMINA</h1>
             </div>
 
-            <nav className="menu">
-                <a href="#inicio">Inicío</a>
-                <a href="#biblioteca">Biblioteca</a>
-                <a href="#categorias">Categorias</a>
-                <a href="#autores">Autores</a>
+            <nav className="menu items-center">
+                <a href="/inicio">Inicío</a>
+                <a href="/biblioteca">Biblioteca</a>
+                <a href="/categorias">Categorias</a>
+                <a href="/autores">Autores</a>
 
 
                 {token ? (
                     <>
-                        <button onClick={sair}>
-                            <LogOut />
-                        </button>
+                        <Link to="/perfil">
+                            <User />
+                        </Link>
                     </>
                 ) : (
                     <Link to="/entrar">
-                        <User />
+                        <BotaoSecundario>Entrar</BotaoSecundario>
                     </Link>
                 )}
 

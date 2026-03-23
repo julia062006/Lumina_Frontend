@@ -29,9 +29,7 @@ export async function getUsuarios() {
      const token = localStorage.getItem("token");
 
     const resposta = await fetch(API + "/usuarios", {
-        headers: {
-            headers: getHeaders()
-        }
+            headers: getHeaders() 
     });
 
     return tratarResposta(resposta);
@@ -63,6 +61,24 @@ export async function loginUsuario(dados) {
     const resposta = await fetch(API + "/entrar", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dados)
+    });
+
+    return tratarResposta(resposta);
+}
+
+export async function getCategorias() {
+    const resposta = await fetch(API + "/categorias", {
+        method: "GET"
+    });
+
+    return tratarResposta(resposta);
+}
+
+export async function atualizarUsuario(id, dados) {
+    const resposta = await fetch(API + "/usuarios/" + id, {
+        method: "PUT",
+        headers: getHeaders(),
         body: JSON.stringify(dados)
     });
 

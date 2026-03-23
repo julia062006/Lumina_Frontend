@@ -6,7 +6,7 @@
   padding: 0.3rem 1rem;
   border-radius: 0.75rem;
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   border: none;
   cursor: pointer;
   transition-property: all;
@@ -14,8 +14,6 @@
   transition-timing-function: ease;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
               0 4px 6px -4px rgba(0, 0, 0, 0.1);
-  
-  
 }
 
 
