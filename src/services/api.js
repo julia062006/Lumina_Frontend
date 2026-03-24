@@ -26,10 +26,8 @@ function getHeaders() {
 }
 
 export async function getUsuarios() {
-     const token = localStorage.getItem("token");
-
     const resposta = await fetch(API + "/usuarios", {
-            headers: getHeaders() 
+        headers: getHeaders()
     });
 
     return tratarResposta(resposta);
@@ -67,6 +65,16 @@ export async function loginUsuario(dados) {
     return tratarResposta(resposta);
 }
 
+export async function atualizarUsuario(id, dados) {
+    const resposta = await fetch(API + "/usuarios/" + id, {
+        method: "PUT",
+        headers: getHeaders(),
+        body: JSON.stringify(dados)
+    });
+
+    return tratarResposta(resposta);
+}
+
 export async function getCategorias() {
     const resposta = await fetch(API + "/categorias", {
         method: "GET"
@@ -80,13 +88,20 @@ export async function getLivrosDestaque() {
     return tratarResposta(resposta);
 }
 
-export async function atualizarUsuario(id, dados) {
-    const resposta = await fetch(API + "/usuarios/" + id, {
-        method: "PUT",
-        headers: getHeaders(),
-        body: JSON.stringify(dados)
+
+export async function criarLivro(dados) {
+    const resposta = await fetch(API + "/livros", {
+        method: "POST",
+        headers: {
+            Authorization: "Bearer " + localStorage.getItem("token")
+        },
+        body: dados
     });
 
     return tratarResposta(resposta);
 }
 
+export async function getAutores() {
+    const resposta = await fetch(API + "/autores");
+    return tratarResposta(resposta);
+}
