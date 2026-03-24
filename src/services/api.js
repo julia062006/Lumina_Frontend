@@ -54,7 +54,7 @@ export async function criarAutor(dados) {
         body: dados
     });
 
-    return resposta;
+    return tratarResposta(resposta);
 }
 
 export async function loginUsuario(dados) {
@@ -75,6 +75,11 @@ export async function getCategorias() {
     return tratarResposta(resposta);
 }
 
+export async function getLivrosDestaque() {
+    const resposta = await fetch(API + "/livros");
+    return tratarResposta(resposta);
+}
+
 export async function atualizarUsuario(id, dados) {
     const resposta = await fetch(API + "/usuarios/" + id, {
         method: "PUT",
@@ -84,3 +89,4 @@ export async function atualizarUsuario(id, dados) {
 
     return tratarResposta(resposta);
 }
+

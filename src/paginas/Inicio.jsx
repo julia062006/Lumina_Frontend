@@ -1,34 +1,47 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BotaoPrimario, BotaoSecundario } from "../componentes/Botao";
 import bg from "../imagens/Livros2.png";
 import React, { useEffect, useState } from "react";
-import { getCategorias } from "../services/api";
-import { useNavigate } from "react-router-dom";
+import { getCategorias, getLivrosDestaque } from "../services/api";
 import Card from "../componentes/Card";
 
 function Inicio() {
 
-
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
-    const navigate = useNavigate();
     const [livrosDestaque, setLivrosDestaque] = useState([]);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        async function carregarCategorias() {
+            try {
+                const resposta = await getCategorias();
+                if (resposta.ok) {
+                    setCategories(resposta.data);
+                } else {
+                    console.error(resposta.data);
+                }
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        carregarCategorias();
+    }, []);
 
     useEffect(() => {
         async function carregarLivros() {
             try {
-                const res = await fetch("http://localhost:3000/categoria");
-                const data = await res.json();
-
-                // filtra apenas os destaques
-                const destaques = data.filter(livro => livro.destaque === true);
-
-                setLivrosDestaque(destaques);
+                const resultado = await getLivrosDestaque();
+                if (resultado.ok) {
+                    const destaques = resultado.data.filter(livro => livro.destaque === true);
+                    setLivrosDestaque(destaques);
+                }
             } catch (error) {
                 console.error(error);
             }
         }
-
         carregarLivros();
     }, []);
 
@@ -55,7 +68,6 @@ function Inicio() {
                     <BotaoPrimario onClick={() => navigate("/biblioteca")}>
                         Explorar Livros
                     </BotaoPrimario>
-
                     <Link to="/cadastroUsuario">
                         <BotaoSecundario>Criar Conta</BotaoSecundario>
                     </Link>
@@ -68,15 +80,14 @@ function Inicio() {
                                 Explore por Categoria
                             </h2>
                         </div>
-
                         {loading ? (
                             <p className="text-center">Carregando...</p>
                         ) : (
                             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                                 {Array.isArray(categories) && categories.map((category) => (
                                     <button
-                                        key={category.id_categoria}
-                                        onClick={() => navigate(`/biblioteca?categoria=${category.id_categoria}`)}
+                                        key={category.id}
+                                        onClick={() => navigate(`/biblioteca?categoria=${category.id}`)}
                                         className="group p-6 rounded-2xl bg-white border border-border/40 transition-all hover:shadow-lg hover:-translate-y-1"
                                     >
                                         <h3 className="font-medium group-hover:text-[var(--lumina-purple)] transition-colors">
@@ -93,10 +104,9 @@ function Inicio() {
                     <div className="container mx-auto px-6 lg:px-8">
                         <div className="text-center mb-12">
                             <h2 className="text-3xl lg:text-4xl font-medium mb-4">
-                                Livros em Destaque, olhar conversa chat Fluxo API e categorias
+                                Livros em Destaque
                             </h2>
                         </div>
-
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                             {livrosDestaque.map((livro) => (
                                 <Card
@@ -109,7 +119,7 @@ function Inicio() {
                         </div>
                     </div>
                 </section>
-                
+
             </div>
         </main>
     );

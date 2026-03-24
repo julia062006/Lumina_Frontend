@@ -10,7 +10,7 @@ import LivroCategoria from "./paginas/LivroCategoria";
 
 import Inicio from "./paginas/Inicio";
 import RotaProtegida from "./rotas/RotaProtegida";
-import Perfil from "./paginas/perfil";
+import Perfil from "./paginas/Perfil";
 
 function App() {
 
