@@ -29,6 +29,7 @@ function App() {
           <Route path="/biblioteca" element={<LivroCategoria />} />
           <Route path="/perfil" element={<RotaProtegida><Perfil /></RotaProtegida>} />
           <Route path="/inicio" element={<Inicio />} />
+          
          
         </Routes>
       </main>

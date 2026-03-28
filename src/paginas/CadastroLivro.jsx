@@ -141,6 +141,18 @@ function CadastrarLivro() {
                 </div>
 
                 <div className="mt-4">
+                    <label>Destaque</label>
+                    <select
+                        {...register("destaque", { required: "Destaque é obrigatório" })}
+                        className="block w-full mt-2 border p-2"
+                    >
+                        <option value="">Selecione</option>
+                        <option value="true">Sim</option>
+                        <option value="false">Não</option>
+                    </select>
+                </div>
+
+                <div className="mt-4">
                     <label>Capa do Livro</label>
                     <input
                         type="file"

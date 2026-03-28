@@ -31,19 +31,23 @@ function Inicio() {
     }, []);
 
     useEffect(() => {
-        async function carregarLivros() {
-            try {
-                const resultado = await getLivrosDestaque();
-                if (resultado.ok) {
-                    const destaques = resultado.data.filter(livro => livro.destaque === true);
-                    setLivrosDestaque(destaques);
-                }
-            } catch (error) {
-                console.error(error);
-            }
+    async function carregarLivros() {
+        try {
+            const dados = await getLivrosDestaque();
+
+            console.log("DADOS:", dados);
+
+            const destaques = dados.filter(livro => livro.destaque == true || livro.destaque == 1);
+
+            setLivrosDestaque(destaques);
+
+        } catch (error) {
+            console.error("Erro ao carregar livros:", error);
         }
-        carregarLivros();
-    }, []);
+    }
+
+    carregarLivros();
+}, []);
 
     return (
         <main>
@@ -86,8 +90,8 @@ function Inicio() {
                             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                                 {Array.isArray(categories) && categories.map((category) => (
                                     <button
-                                        key={category.id}
-                                        onClick={() => navigate(`/biblioteca?categoria=${category.id}`)}
+                                        key={category.id_categoria}
+                                        onClick={() => navigate(`/biblioteca?categoria=${category.id_categoria}`)}
                                         className="group p-6 rounded-2xl bg-white border border-border/40 transition-all hover:shadow-lg hover:-translate-y-1"
                                     >
                                         <h3 className="font-medium group-hover:text-[var(--lumina-purple)] transition-colors">
@@ -110,10 +114,10 @@ function Inicio() {
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                             {livrosDestaque.map((livro) => (
                                 <Card
-                                    key={livro.id}
+                                    key={livro.id_livro}
                                     titulo={livro.titulo}
-                                    autor={livro.autor}
-                                    imagem={livro.imagem}
+                                    autor={livro.autor?.nome}
+                                    imagem={`http://localhost:3001/uploads/${livro.capa_imagem}`}
                                 />
                             ))}
                         </div>
