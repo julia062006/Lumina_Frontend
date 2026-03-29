@@ -11,6 +11,7 @@ import CadastrarLivro from "./paginas/CadastroLivro";
 import Biblioteca from "./paginas/Biblioteca";
 import Inicio from "./paginas/Inicio";
 import RotaProtegida from "./rotas/RotaProtegida";
+import Autores from "./paginas/Autores";
 import Perfil from "./paginas/Perfil";
 
 function App() {
@@ -29,8 +30,8 @@ function App() {
           <Route path="/biblioteca" element={<Biblioteca />} />
           <Route path="/perfil" element={<RotaProtegida><Perfil /></RotaProtegida>} />
           <Route path="/inicio" element={<Inicio />} />
-          
-         
+          <Route path="/autores" element={<Autores />} />
+          <Route path="/livros/autor/:id" element={<Biblioteca />} />         
         </Routes>
       </main>
 
