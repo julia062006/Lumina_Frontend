@@ -35,9 +35,16 @@ function Inicio() {
         try {
             const dados = await getLivrosDestaque();
 
-            console.log("DADOS:", dados);
+            console.log("TODOS:", dados);
 
-            const destaques = dados.filter(livro => livro.destaque == true || livro.destaque == 1);
+
+            console.log("Dados brutos da API:", dados);
+console.log("Tipo do campo destaque:", typeof dados[0]?.destaque, "| Valor:", dados[0]?.destaque);
+            const destaques = dados.filter(
+                livro => livro.destaque === true || livro.destaque == 1
+            );
+
+            console.log("DESTAQUES:", destaques);
 
             setLivrosDestaque(destaques);
 
@@ -92,7 +99,7 @@ function Inicio() {
                                     <button
                                         key={category.id_categoria}
                                         onClick={() => navigate(`/biblioteca?categoria=${category.id_categoria}`)}
-                                        className="group p-6 rounded-2xl bg-white border border-border/40 transition-all hover:shadow-lg hover:-translate-y-1"
+                                        className="group p-6 rounded-2xl bg-white border border-border/40 transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-400/50"
                                     >
                                         <h3 className="font-medium group-hover:text-[var(--lumina-purple)] transition-colors">
                                             {category.nome}
@@ -113,13 +120,17 @@ function Inicio() {
                         </div>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                             {livrosDestaque.map((livro) => (
-                                <Card
-                                    key={livro.id_livro}
-                                    titulo={livro.titulo}
-                                    autor={livro.autor?.nome}
-                                    imagem={`http://localhost:3001/uploads/${livro.capa_imagem}`}
-                                />
-                            ))}
+  <Card
+    key={livro.id_livro}
+    livro={{
+      title: livro.titulo,
+      author: livro.autor?.nome,
+      image: `http://localhost:3000/uploads/${livro.capa_imagem}`,
+      price: livro.preco ?? 0,
+      description: livro.descricao ?? "",
+    }}
+  />
+))}
                         </div>
                     </div>
                 </section>

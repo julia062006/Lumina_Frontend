@@ -93,6 +93,16 @@ export async function getLivrosDestaque() {
     return await resposta.json();
 }
 
+export async function getLivros() {
+    const resposta = await fetch(API + "/livros");
+
+    if (!resposta.ok) {
+        throw new Error("Erro ao buscar livros");
+    }
+
+    return await resposta.json();
+}
+
 
 export async function criarLivro(dados) {
     const resposta = await fetch(API + "/livros", {
