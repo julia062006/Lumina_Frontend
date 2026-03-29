@@ -23,8 +23,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Inicio />}></Route>
           <Route path="/cadastroUsuario" element={<CadastroUsuario />} />
-          <Route path="/cadastroAutor" element={<CadastrarAutor/>}/>
-          <Route path="/cadastroLivro" element={<CadastrarLivro/>}/>
+          <Route path="/cadastroAutor" element={<RotaProtegida><CadastrarAutor /></RotaProtegida>}/>
+          <Route path="/cadastroLivro" element={<RotaProtegida><CadastrarLivro /></RotaProtegida>}/>
           <Route path="/entrar" element={<Entrar />} />
           <Route path="/biblioteca" element={<LivroCategoria />} />
           <Route path="/perfil" element={<RotaProtegida><Perfil /></RotaProtegida>} />

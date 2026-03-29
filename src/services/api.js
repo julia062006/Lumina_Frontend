@@ -84,7 +84,10 @@ export async function getCategorias() {
 }
 
 export async function getLivrosDestaque() {
-    const resposta = await fetch(API + "/livros");
+    const resposta = await fetch(API + "/livros", {
+        method: "GET"
+    });
+
 
     if (!resposta.ok) {
         throw new Error("Erro ao buscar livros");
@@ -108,5 +111,13 @@ export async function criarLivro(dados) {
 
 export async function getAutores() {
     const resposta = await fetch(API + "/autores");
+    return tratarResposta(resposta);
+}
+
+export async function getPerfil() {
+    const resposta = await fetch(API + "/perfil", {
+        headers: getHeaders()
+    });
+
     return tratarResposta(resposta);
 }

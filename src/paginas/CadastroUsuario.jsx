@@ -6,10 +6,11 @@ import Formulario from "../componentes/Formulario";
 import { useNavigate } from "react-router-dom";
 import InputSenha from "../componentes/InputSenha";
 import Swal from "sweetalert2";
+import { cpf } from "cpf-cnpj-validator";
 
 
 function CadastroUsuario() {
-    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
+    const { register, handleSubmit, watch, setError, formState: { errors }, reset } = useForm();
     const navigate = useNavigate();
     const senha = watch("senha");
 
@@ -18,7 +19,22 @@ function CadastroUsuario() {
             const resposta = await criarUsuario(dados);
 
             if (!resposta.ok) {
-                return
+
+                if (resposta.data.erros) {
+                    resposta.data.erros.forEach((erro) => {
+                        setError(erro.path, {
+                            type: "server",
+                            message: erro.msg
+                        });
+                    });
+                } else if (resposta.data.mensagem) {
+                    Swal.fire({
+                        icon: "error",
+                        title: resposta.data.mensagem
+                    });
+                }
+
+                return;
             }
 
             Swal.fire({
@@ -28,11 +44,12 @@ function CadastroUsuario() {
 
             reset();
             navigate("/entrar");
+
         } catch (erro) {
             console.log("Erro ao conectar com o servidor");
         }
     }
-    
+
     function mascaraCPF(valor) {
         valor = valor.replace(/\D/g, "");
         valor = valor.slice(0, 11);
@@ -85,7 +102,15 @@ function CadastroUsuario() {
                     register={(name) =>
                         register(name, {
                             required: "A senha é obrigatória",
-                            minLength: { value: 6, message: "Mínimo 6 caracteres" }
+                            minLength: { value: 6, message: "Mínimo 6 caracteres" },
+                            pattern: {
+                                value: /[A-Z]/,
+                                message: "Deve ter pelo menos 1 letra maiúscula"
+                            },
+                            validate: {
+                                temEspecial: (value) =>
+                                    /[^A-Za-z0-9]/.test(value) || "Deve ter pelo menos 1 caractere especial"
+                            }
                         })
                     }
                     error={errors.senha}
@@ -112,7 +137,11 @@ function CadastroUsuario() {
                     placeholder="Digite seu CPF"
                     register={(name) =>
                         register(name, {
-                            required: "O CPF é obrigatório"
+                            required: "O CPF é obrigatório",
+                            validate: (value) => {
+                                const cpfLimpo = value.replace(/\D/g, "");
+                                return cpf.isValid(cpfLimpo) || "CPF inválido";
+                            }
                         })
                     }
                     onChange={(e) => {
@@ -120,7 +149,7 @@ function CadastroUsuario() {
                     }}
                     error={errors.cpf}
                 />
-
+                
                 <div className="flex gap-4 mt-4 items-center">
                     <BotaoPrimario type="submit">
                         Cadastrar

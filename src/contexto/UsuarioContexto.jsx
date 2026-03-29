@@ -1,4 +1,5 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
+import { getPerfil } from "../services/api";
 
 const STORAGE_KEYS = {
     TOKEN: "token",
@@ -17,16 +18,41 @@ function carregarDoStorage(chave) {
 export const UsuarioContexto = createContext(null);
 
 export function UsuarioProvider({ children }) {
-   
-    const [usuario, setUsuario] = useState(() => carregarDoStorage(STORAGE_KEYS.USUARIO));
 
-    const [token, setToken] = useState(() => localStorage.getItem(STORAGE_KEYS.TOKEN));
+    const [usuario, setUsuario] = useState(() =>
+        carregarDoStorage(STORAGE_KEYS.USUARIO)
+    );
+
+    const [token, setToken] = useState(() =>
+        localStorage.getItem(STORAGE_KEYS.TOKEN)
+    );
+
+    useEffect(() => {
+        async function carregarPerfil() {
+            if (!token) return;
+
+            const resposta = await getPerfil();
+
+            if (resposta.ok) {
+                setUsuario(resposta.data);
+                localStorage.setItem(
+                    STORAGE_KEYS.USUARIO,
+                    JSON.stringify(resposta.data)
+                );
+            }
+        }
+
+        carregarPerfil();
+    }, [token]);
 
     function entrar(dadosUsuario, tokenRecebido) {
         if (!dadosUsuario || !tokenRecebido) return;
 
         localStorage.setItem(STORAGE_KEYS.TOKEN, tokenRecebido);
-        localStorage.setItem(STORAGE_KEYS.USUARIO, JSON.stringify(dadosUsuario));
+        localStorage.setItem(
+            STORAGE_KEYS.USUARIO,
+            JSON.stringify(dadosUsuario)
+        );
 
         setUsuario(dadosUsuario);
         setToken(tokenRecebido);
@@ -41,7 +67,9 @@ export function UsuarioProvider({ children }) {
     }
 
     return (
-        <UsuarioContexto.Provider value={{ usuario, token, entrar, sair }}>
+        <UsuarioContexto.Provider
+            value={{ usuario, token, entrar, sair }}
+        >
             {children}
         </UsuarioContexto.Provider>
     );
