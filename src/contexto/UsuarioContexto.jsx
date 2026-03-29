@@ -66,9 +66,21 @@ export function UsuarioProvider({ children }) {
         setToken(null);
     }
 
+    async function atualizarUsuarioContexto() {
+        const resposta = await getPerfil();
+
+        if (resposta.ok) {
+            setUsuario(resposta.data);
+            localStorage.setItem(
+                STORAGE_KEYS.USUARIO,
+                JSON.stringify(resposta.data)
+            );
+        }
+    }
+
     return (
         <UsuarioContexto.Provider
-            value={{ usuario, token, entrar, sair }}
+            value={{ usuario, token, entrar, sair, atualizarUsuarioContexto }}
         >
             {children}
         </UsuarioContexto.Provider>

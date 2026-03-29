@@ -13,6 +13,7 @@ import Inicio from "./paginas/Inicio";
 import RotaProtegida from "./rotas/RotaProtegida";
 import Autores from "./paginas/Autores";
 import Perfil from "./paginas/Perfil";
+import EditarPerfil from "./paginas/EditarPerfil";
 
 function App() {
 
@@ -29,9 +30,10 @@ function App() {
           <Route path="/entrar" element={<Entrar />} />
           <Route path="/biblioteca" element={<Biblioteca />} />
           <Route path="/perfil" element={<RotaProtegida><Perfil /></RotaProtegida>} />
+          <Route path="/editarPerfil" element={<RotaProtegida><EditarPerfil /></RotaProtegida>} />
           <Route path="/inicio" element={<Inicio />} />
           <Route path="/autores" element={<Autores />} />
-          <Route path="/livros/autor/:id" element={<Biblioteca />} />         
+          <Route path="/livros/autor/:id" element={<Biblioteca />} />
         </Routes>
       </main>
 

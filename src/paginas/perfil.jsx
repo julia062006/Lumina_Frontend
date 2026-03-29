@@ -1,4 +1,4 @@
-import { LogOut } from "lucide-react";
+import { LogOut, Pencil } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useUsuario } from "../contexto/UsuarioContexto";
 import { BotaoSecundario } from "../componentes/Botao";
@@ -36,6 +36,10 @@ function Perfil() {
         <div className="max-w-md mx-auto mt-10 p-6 border rounded-lg shadow">
 
             <h2 className="text-2xl font-bold mb-4">Perfil</h2>
+            <BotaoSecundario onClick={() => navigate("/editarPerfil")}>
+                <Pencil />
+                Editar usuário
+            </BotaoSecundario>
 
             <div className="space-y-2">
                 <p><strong>Nome:</strong> {usuario.nome}</p>
