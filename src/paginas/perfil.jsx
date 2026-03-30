@@ -1,7 +1,7 @@
 import { LogOut, Pencil } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useUsuario } from "../contexto/UsuarioContexto";
-import { BotaoSecundario } from "../componentes/Botao";
+import { BotaoPrimario, BotaoSecundario } from "../componentes/Botao";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 
@@ -38,7 +38,7 @@ function Perfil() {
             <h2 className="text-2xl font-bold mb-4">Perfil</h2>
             <BotaoSecundario onClick={() => navigate("/editarPerfil")}>
                 <Pencil />
-                Editar usuário
+                Editar perfil
             </BotaoSecundario>
 
             <div className="space-y-2">
@@ -48,11 +48,18 @@ function Perfil() {
             </div>
 
             <div className="mt-6">
+                <BotaoPrimario onClick={() => navigate("/painel")}>
+                    Acessar painel
+                </BotaoPrimario>
+            </div>
+            
+            <div className="mt-6">
                 <BotaoSecundario onClick={sair}>
                     <LogOut />
                     Sair
                 </BotaoSecundario>
             </div>
+            
 
         </div>
     );

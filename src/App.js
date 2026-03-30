@@ -4,16 +4,18 @@ import "./componentes/Rodape.css";
 import Header from "./componentes/Header";
 import Rodape from "./componentes/Rodape";
 import CadastroUsuario from "./paginas/CadastroUsuario";
-import CadastrarAutor from "./paginas/CadastroAutor";
+import CadastrarAutor from "./paginas/painel/autores/CadastroAutor";
 import Entrar from "./paginas/Entrar";
 import LivroCategoria from "./paginas/LivroCategoria";
-import CadastrarLivro from "./paginas/CadastroLivro";
+import CadastrarLivro from "./paginas/painel/livros/CadastroLivro";
 import Biblioteca from "./paginas/Biblioteca";
 import Inicio from "./paginas/Inicio";
 import RotaProtegida from "./rotas/RotaProtegida";
 import Autores from "./paginas/Autores";
 import Perfil from "./paginas/Perfil";
 import EditarPerfil from "./paginas/EditarPerfil";
+import Painel from "./paginas/painel/Painel";
+import ListarLivros from "./paginas/painel/livros/ListarLivros";
 
 function App() {
 
@@ -25,8 +27,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Inicio />}></Route>
           <Route path="/cadastroUsuario" element={<CadastroUsuario />} />
-          <Route path="/cadastroAutor" element={<RotaProtegida><CadastrarAutor /></RotaProtegida>}/>
-          <Route path="/cadastroLivro" element={<RotaProtegida><CadastrarLivro /></RotaProtegida>}/>
           <Route path="/entrar" element={<Entrar />} />
           <Route path="/biblioteca" element={<Biblioteca />} />
           <Route path="/perfil" element={<RotaProtegida><Perfil /></RotaProtegida>} />
@@ -34,6 +34,13 @@ function App() {
           <Route path="/inicio" element={<Inicio />} />
           <Route path="/autores" element={<Autores />} />
           <Route path="/livros/autor/:id" element={<Biblioteca />} />
+
+          <Route path="/painel" element={<RotaProtegida><Painel /></RotaProtegida>} />
+
+          <Route path="/painel/livros" element={<RotaProtegida><ListarLivros /></RotaProtegida>}/>
+          <Route path="/painel/cadastroLivro" element={<RotaProtegida><CadastrarLivro /></RotaProtegida>}/>
+
+          <Route path="/painel/cadastroAutor" element={<RotaProtegida><CadastrarAutor /></RotaProtegida>}/>
         </Routes>
       </main>
 

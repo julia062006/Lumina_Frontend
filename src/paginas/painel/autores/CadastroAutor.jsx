@@ -1,39 +1,41 @@
 import { useForm } from "react-hook-form";
-import { criarAutor } from "../services/api";
-import { BotaoPrimario, BotaoSecundario } from "../componentes/Botao";
-import Input from "../componentes/Input";
-import Formulario from "../componentes/Formulario";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { criarAutor } from "../../../services/api";
+import { BotaoPrimario, BotaoSecundario } from "../../../componentes/Botao";
+import Input from "../../../componentes/Input";
+import Formulario from "../../../componentes/Formulario";
+import { validacoesNome, validacoesTexto, MENSAGENS } from "../../../utilitarios/validacoes";
+import { criarFormData, alertaSucesso, alertaErro } from "../../../utilitarios/formulario";
 
 function CadastrarAutor() {
-
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const navigate = useNavigate();
     const [foto, setFoto] = useState(null);
 
     async function cadastrar(dados) {
-
-        const formData = new FormData();
-
-        formData.append("nome", dados.nome);
-        formData.append("biografia", dados.biografia);
-        formData.append("foto", foto);
-
         try {
+            const formData = criarFormData({
+                nome: dados.nome,
+                biografia: dados.biografia,
+                foto,
+            });
 
             const resposta = await criarAutor(formData);
 
             if (!resposta.ok) {
-                return
+                await alertaErro(resposta.data.mensagem);
+                return;
             }
 
-            alert("Autor cadastrado com sucesso!");
+            await alertaSucesso(MENSAGENS.CADASTRO_SUCESSO("Autor"));
             reset();
             setFoto(null);
 
         } catch (erro) {
-            console.log("Erro ao conectar com o servidor");
+            console.error(MENSAGENS.ERRO_SERVIDOR, erro);
+            await alertaErro(MENSAGENS.ERRO_SERVIDOR);
         }
     }
 
@@ -45,12 +47,7 @@ function CadastrarAutor() {
                     label="Nome"
                     name="nome"
                     placeholder="Digite o nome do autor"
-                    register={(name) =>
-                        register(name, {
-                            required: "O nome é obrigatório",
-                            minLength: { value: 3, message: "Mínimo 3 caracteres" }
-                        })
-                    }
+                    register={(name) => register(name, validacoesNome)}
                     error={errors.nome}
                 />
 
@@ -58,17 +55,12 @@ function CadastrarAutor() {
                     label="Biografia"
                     name="biografia"
                     placeholder="Digite a biografia do autor"
-                    register={(name) =>
-                        register(name, {
-                            required: "A biografia é obrigatória"
-                        })
-                    }
+                    register={(name) => register(name, validacoesTexto("A biografia é obrigatória"))}
                     error={errors.biografia}
                 />
 
                 <div className="mt-4">
                     <label>Foto do Autor</label>
-
                     <input
                         type="file"
                         accept="image/*"
@@ -87,20 +79,15 @@ function CadastrarAutor() {
                 )}
 
                 <div className="flex gap-4 mt-4">
-
-                    <BotaoPrimario type="submit">
-                        Cadastrar
-                    </BotaoPrimario>
-
-                    <BotaoSecundario onClick={() => navigate("/")}>
+                    <BotaoPrimario type="submit">Cadastrar</BotaoPrimario>
+                    <BotaoSecundario onClick={() => navigate("/painel/autores")}>
                         Voltar
                     </BotaoSecundario>
-
                 </div>
 
             </Formulario>
         </div>
-    )
+    );
 }
 
 export default CadastrarAutor;

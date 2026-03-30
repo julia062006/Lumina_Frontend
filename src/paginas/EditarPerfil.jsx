@@ -1,17 +1,25 @@
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { atualizarUsuario } from "../services/api";
 import { BotaoPrimario, BotaoSecundario } from "../componentes/Botao";
 import Input from "../componentes/Input";
 import Formulario from "../componentes/Formulario";
-import { useNavigate } from "react-router-dom";
 import InputSenha from "../componentes/InputSenha";
-import Swal from "sweetalert2";
-import { cpf } from "cpf-cnpj-validator";
-import { useEffect } from "react";
 import { useUsuario } from "../contexto/UsuarioContexto";
+import { mascaraCPF } from "../utilitarios/formatadores";
+import { validacoesNome, validacoesSenha, validacoesConfirmarSenha, validacoesCPF, MENSAGENS } from "../utilitarios/validacoes";
+import { alertaSucesso, alertaErro, tratarErrosResposta } from "../utilitarios/formulario";
+
+function prepararDados(dados, email) {
+    const copia = { ...dados, email };
+    delete copia.confirmarSenha;
+    if (!copia.senha) delete copia.senha;
+    return copia;
+}
 
 function EditarPerfil() {
-
     const { usuario, atualizarUsuarioContexto } = useUsuario();
     const navigate = useNavigate();
 
@@ -21,79 +29,38 @@ function EditarPerfil() {
         setValue,
         setError,
         watch,
-        formState: { errors }
+        formState: { errors },
     } = useForm();
 
-    const senha = watch("senha");
-
-     function mascaraCPF(valor) {
-        valor = valor.replace(/\D/g, "");
-        valor = valor.slice(0, 11);
-
-        valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
-        valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
-        valor = valor.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-
-        return valor;
-    }
+    const getSenha = () => watch("senha");
 
     useEffect(() => {
         if (!usuario) {
             navigate("/entrar");
             return;
         }
-
         setValue("nome", usuario.nome);
         setValue("email", usuario.email);
-        setValue("cpf",mascaraCPF(usuario.cpf));
-
+        setValue("cpf", mascaraCPF(usuario.cpf));
     }, [usuario]);
 
     async function salvar(dados) {
         try {
-            delete dados.confirmarSenha;
-
-            if (!dados.senha) {
-                delete dados.senha;
-            }
-
-            const dadosAtualizados = {
-                ...dados,
-                email: usuario.email
-            };
-
+            const dadosAtualizados = prepararDados(dados, usuario.email);
             const resposta = await atualizarUsuario(usuario.id, dadosAtualizados);
 
             if (!resposta.ok) {
-
-                if (resposta.data.erros) {
-                    resposta.data.erros.forEach((erro) => {
-                        setError(erro.path, {
-                            type: "server",
-                            message: erro.msg
-                        });
-                    });
-                } else if (resposta.data.mensagem) {
-                    Swal.fire({
-                        icon: "error",
-                        title: resposta.data.mensagem
-                    });
-                }
-
+                tratarErrosResposta(resposta, setError);
                 return;
             }
 
             await atualizarUsuarioContexto();
-
-            Swal.fire({
-                icon: "success",
-                title: "Usuário atualizado com sucesso!"
-            });
-
+            await alertaSucesso(MENSAGENS.ATUALIZADO_SUCESSO);
             navigate("/perfil");
 
         } catch (erro) {
-            console.log("Erro ao atualizar");
+            console.error("Erro ao atualizar usuário:", erro);
+            await alertaErro(MENSAGENS.ERRO_SERVIDOR);
         }
     }
 
@@ -101,17 +68,12 @@ function EditarPerfil() {
 
     return (
         <div>
-            <Formulario titulo="Editar Usuário" onSubmit={handleSubmit(salvar)}>
+            <Formulario titulo="Editar Perfil" onSubmit={handleSubmit(salvar)}>
 
                 <Input
                     label="Nome"
                     name="nome"
-                    register={(name) =>
-                        register(name, {
-                            required: "O nome é obrigatório",
-                            minLength: { value: 3, message: "Mínimo 3 caracteres" }
-                        })
-                    }
+                    register={(name) => register(name, validacoesNome)}
                     error={errors.nome}
                 />
 
@@ -131,24 +93,7 @@ function EditarPerfil() {
                     label="Nova Senha"
                     name="senha"
                     placeholder="Digite a nova senha (opcional)"
-                    register={(name) =>
-                        register(name, {
-                            minLength: {
-                                value: 6,
-                                message: "Mínimo 6 caracteres"
-                            },
-                            pattern: {
-                                value: /[A-Z]/,
-                                message: "Deve ter pelo menos 1 letra maiúscula"
-                            },
-                            validate: {
-                                temEspecial: (value) =>
-                                    !value ||
-                                    /[^A-Za-z0-9]/.test(value) ||
-                                    "Deve ter pelo menos 1 caractere especial"
-                            }
-                        })
-                    }
+                    register={(name) => register(name, validacoesSenha(true))}
                     error={errors.senha}
                 />
 
@@ -156,38 +101,19 @@ function EditarPerfil() {
                     label="Confirmar Nova Senha"
                     name="confirmarSenha"
                     placeholder="Confirme a nova senha"
-                    register={(name) =>
-                        register(name, {
-                            validate: (value) =>
-                                !senha || value === senha || "As senhas não são iguais!"
-                        })
-                    }
+                    register={(name) => register(name, validacoesConfirmarSenha(getSenha))}
                     error={errors.confirmarSenha}
                 />
 
                 <Input
                     label="CPF"
                     name="cpf"
-                    register={(name) =>
-                        register(name, {
-                            required: "O CPF é obrigatório",
-                            onChange: (e) => {
-                                e.target.value = mascaraCPF(e.target.value);
-                            },
-                            validate: (value) => {
-                                const cpfLimpo = value.replace(/\D/g, "");
-                                return cpf.isValid(cpfLimpo) || "CPF inválido";
-                            }
-                        })
-                    }
+                    register={(name) => register(name, validacoesCPF)}
                     error={errors.cpf}
                 />
 
                 <div className="flex gap-4 mt-4 items-center">
-                    <BotaoPrimario type="submit">
-                        Salvar
-                    </BotaoPrimario>
-
+                    <BotaoPrimario type="submit">Salvar</BotaoPrimario>
                     <BotaoSecundario type="button" onClick={() => navigate("/perfil")}>
                         Cancelar
                     </BotaoSecundario>

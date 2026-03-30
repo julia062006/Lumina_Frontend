@@ -1,65 +1,65 @@
 import { useForm } from "react-hook-form";
-import { criarLivro, getAutores, getCategorias } from "../services/api";
-import { BotaoPrimario, BotaoSecundario } from "../componentes/Botao";
-import Input from "../componentes/Input";
-import Formulario from "../componentes/Formulario";
-import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { criarLivro, getAutores, getCategorias } from "../../../services/api";
+import { BotaoPrimario, BotaoSecundario } from "../../../componentes/Botao";
+import Input from "../../../componentes/Input";
+import Formulario from "../../../componentes/Formulario";
+import { validacoesTexto, validacoesNumero, validacoesSelect, MENSAGENS } from "../../../utilitarios/validacoes";
+import { criarFormData, alertaSucesso, alertaErro } from "../../../utilitarios/formulario";
 
 function CadastrarLivro() {
-
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const navigate = useNavigate();
 
     const [capa, setCapa] = useState(null);
     const [pdf, setPdf] = useState(null);
-
     const [autores, setAutores] = useState([]);
     const [categorias, setCategorias] = useState([]);
 
     useEffect(() => {
         async function carregarDados() {
-            const respostaAutores = await getAutores();
-            const respostaCategorias = await getCategorias();
+            const [respostaAutores, respostaCategorias] = await Promise.all([
+                getAutores(),
+                getCategorias(),
+            ]);
 
-            if (respostaAutores.ok) {
-                setAutores(respostaAutores.data);
-            }
-
-            if (respostaCategorias.ok) {
-                setCategorias(respostaCategorias.data);
-            }
+            if (respostaAutores.ok) setAutores(respostaAutores.data);
+            if (respostaCategorias.ok) setCategorias(respostaCategorias.data);
         }
 
         carregarDados();
     }, []);
 
     async function cadastrar(dados) {
-
-        const formData = new FormData();
-
-        formData.append("titulo", dados.titulo);
-        formData.append("descricao", dados.descricao);
-        formData.append("preco", dados.preco);
-        formData.append("id_autor", dados.id_autor);
-        formData.append("id_categoria", dados.id_categoria);
-
-        formData.append("capa_imagem", capa);
-        formData.append("arquivo_pdf", pdf);
-
         try {
+            const formData = criarFormData({
+                titulo: dados.titulo,
+                descricao: dados.descricao,
+                preco: dados.preco,
+                id_autor: dados.id_autor,
+                id_categoria: dados.id_categoria,
+                destaque: dados.destaque,
+                capa_imagem: capa,
+                arquivo_pdf: pdf,
+            });
 
             const resposta = await criarLivro(formData);
 
-            if (!resposta.ok) return;
+            if (!resposta.ok) {
+                await alertaErro(resposta.data.mensagem);
+                return;
+            }
 
-            alert("Livro cadastrado com sucesso!");
+            await alertaSucesso(MENSAGENS.CADASTRO_SUCESSO("Livro"));
             reset();
             setCapa(null);
             setPdf(null);
 
         } catch (erro) {
-            console.log("Erro ao conectar com o servidor");
+            console.error(MENSAGENS.ERRO_SERVIDOR, erro);
+            await alertaErro(MENSAGENS.ERRO_SERVIDOR);
         }
     }
 
@@ -71,11 +71,7 @@ function CadastrarLivro() {
                     label="Título"
                     name="titulo"
                     placeholder="Digite o título"
-                    register={(name) =>
-                        register(name, {
-                            required: "O título é obrigatório"
-                        })
-                    }
+                    register={(name) => register(name, validacoesTexto("O título é obrigatório"))}
                     error={errors.titulo}
                 />
 
@@ -83,11 +79,7 @@ function CadastrarLivro() {
                     label="Descrição"
                     name="descricao"
                     placeholder="Digite a descrição"
-                    register={(name) =>
-                        register(name, {
-                            required: "A descrição é obrigatória"
-                        })
-                    }
+                    register={(name) => register(name, validacoesTexto("A descrição é obrigatória"))}
                     error={errors.descricao}
                 />
 
@@ -96,60 +88,53 @@ function CadastrarLivro() {
                     name="preco"
                     type="number"
                     placeholder="Digite o preço"
-                    register={(name) =>
-                        register(name, {
-                            required: "O preço é obrigatório"
-                        })
-                    }
+                    register={(name) => register(name, validacoesNumero("O preço é obrigatório"))}
                     error={errors.preco}
                 />
 
                 <div className="mt-4">
                     <label>Autor</label>
                     <select
-                        {...register("id_autor", { required: "Autor é obrigatório" })}
+                        {...register("id_autor", validacoesSelect("Autor é obrigatório"))}
                         className="block w-full mt-2 border p-2"
                     >
                         <option value="">Selecione um autor</option>
-
                         {autores.map((autor) => (
                             <option key={autor.id_autor} value={autor.id_autor}>
                                 {autor.nome}
                             </option>
                         ))}
                     </select>
-
                     {errors.id_autor && <p>{errors.id_autor.message}</p>}
                 </div>
 
                 <div className="mt-4">
                     <label>Categoria</label>
                     <select
-                        {...register("id_categoria", { required: "Categoria é obrigatória" })}
+                        {...register("id_categoria", validacoesSelect("Categoria é obrigatória"))}
                         className="block w-full mt-2 border p-2"
                     >
                         <option value="">Selecione uma categoria</option>
-
                         {categorias.map((categoria) => (
                             <option key={categoria.id_categoria} value={categoria.id_categoria}>
                                 {categoria.nome}
                             </option>
                         ))}
                     </select>
-
                     {errors.id_categoria && <p>{errors.id_categoria.message}</p>}
                 </div>
 
                 <div className="mt-4">
                     <label>Destaque</label>
                     <select
-                        {...register("destaque", { required: "Destaque é obrigatório" })}
+                        {...register("destaque", validacoesSelect("Destaque é obrigatório"))}
                         className="block w-full mt-2 border p-2"
                     >
                         <option value="">Selecione</option>
                         <option value="true">Sim</option>
                         <option value="false">Não</option>
                     </select>
+                    {errors.destaque && <p>{errors.destaque.message}</p>}
                 </div>
 
                 <div className="mt-4">
@@ -182,15 +167,10 @@ function CadastrarLivro() {
                 </div>
 
                 <div className="flex gap-4 mt-4">
-
-                    <BotaoPrimario type="submit">
-                        Cadastrar
-                    </BotaoPrimario>
-
-                    <BotaoSecundario onClick={() => navigate("/")}>
+                    <BotaoPrimario type="submit">Cadastrar</BotaoPrimario>
+                    <BotaoSecundario onClick={() => navigate("/painel/livros")}>
                         Voltar
                     </BotaoSecundario>
-
                 </div>
 
             </Formulario>
