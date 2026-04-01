@@ -1,4 +1,3 @@
-// Botao.jsx
 import "./Botao.css";
 
 export default function Botao({

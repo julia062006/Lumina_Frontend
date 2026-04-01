@@ -43,18 +43,6 @@ export async function criarUsuario(dados) {
     return tratarResposta(resposta);
 }
 
-export async function criarAutor(dados) {
-    const resposta = await fetch(API + "/autores", {
-        method: "POST",
-        headers: {
-            Authorization: "Bearer " + localStorage.getItem("token")
-        },
-        body: dados
-    });
-
-    return tratarResposta(resposta);
-}
-
 export async function loginUsuario(dados) {
     const resposta = await fetch(API + "/entrar", {
         method: "POST",
@@ -75,12 +63,53 @@ export async function atualizarUsuario(id, dados) {
     return tratarResposta(resposta);
 }
 
+export async function getPerfil() {
+    const resposta = await fetch(API + "/perfil", {
+        headers: getHeaders()
+    });
+
+    return tratarResposta(resposta);
+}
+
+export async function criarAutor(dados) {
+    const resposta = await fetch(API + "/autores", {
+        method: "POST",
+        headers: {
+            Authorization: "Bearer " + localStorage.getItem("token")
+        },
+        body: dados
+    });
+
+    return tratarResposta(resposta);
+}
+
+export async function getAutores() {
+    const resposta = await fetch(API + "/autores");
+
+    if (!resposta.ok) {
+        throw new Error("Erro ao buscar autores");
+    }
+
+    return tratarResposta(resposta);
+}
+
+
 export async function getCategorias() {
     const resposta = await fetch(API + "/categorias", {
         method: "GET"
     });
 
     return tratarResposta(resposta);
+}
+
+export async function getLivros() {
+    const resposta = await fetch(API + "/livros");
+
+    if (!resposta.ok) {
+        throw new Error("Erro ao buscar livros");
+    }
+
+    return await resposta.json();
 }
 
 export async function getLivrosDestaque() {
@@ -96,17 +125,6 @@ export async function getLivrosDestaque() {
     return await resposta.json();
 }
 
-export async function getLivros() {
-    const resposta = await fetch(API + "/livros");
-
-    if (!resposta.ok) {
-        throw new Error("Erro ao buscar livros");
-    }
-
-    return await resposta.json();
-}
-
-
 export async function criarLivro(dados) {
     const resposta = await fetch(API + "/livros", {
         method: "POST",
@@ -119,15 +137,4 @@ export async function criarLivro(dados) {
     return tratarResposta(resposta);
 }
 
-export async function getAutores() {
-    const resposta = await fetch(API + "/autores");
-    return tratarResposta(resposta);
-}
 
-export async function getPerfil() {
-    const resposta = await fetch(API + "/perfil", {
-        headers: getHeaders()
-    });
-
-    return tratarResposta(resposta);
-}

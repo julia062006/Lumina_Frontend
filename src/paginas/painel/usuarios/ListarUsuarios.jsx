@@ -2,11 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { BotaoPrimario, BotaoSecundario } from "../../../componentes/Botao";
 import Tabela from "../../../componentes/Tabela";
 import Paginacao from "../../../componentes/Paginacao";
-import { useLivros } from "./useLivros";
+import { useUsuarios } from "./useUsuarios";
 
-function ListarLivros() {
+function ListarUsuarios() {
     const navigate = useNavigate();
-    const { livrosPaginados, totalPaginas, paginaAtual, setPaginaAtual } = useLivros();
+    const { usuariosPaginados, totalPaginas, paginaAtual, setPaginaAtual } = useUsuarios();
 
     function excluir(id) {
         // fazer
@@ -15,9 +15,9 @@ function ListarLivros() {
     return (
         <div className="max-w-4xl mx-auto mt-10 px-4">
             <div className="flex items-center justify-between mb-6">
-                <h1 className="text-2xl font-semibold">Livros</h1>
+                <h1 className="text-2xl font-semibold">Usuários</h1>
                 <div className="flex gap-2">
-                    <BotaoPrimario onClick={() => navigate("/painel/cadastroLivro")}>
+                    <BotaoPrimario onClick={() => navigate("/painel/cadastroUsuario")}>
                         Cadastrar
                     </BotaoPrimario>
                     <BotaoSecundario onClick={() => navigate("/painel")}>
@@ -27,22 +27,22 @@ function ListarLivros() {
             </div>
 
             <Tabela
-                colunas={["Título", "Autor", "Preço"]}
-                dados={livrosPaginados}
-                renderLinha={(livro) => (
+                colunas={["Nome", "Email", "CPF"]}
+                dados={usuariosPaginados}
+                renderLinha={(usuario) => (
                     <>
-                        <td className="px-4 py-2">{livro.titulo}</td>
-                        <td className="px-4 py-2">{livro.autor?.nome}</td>
-                        <td className="px-4 py-2">R$ {livro.preco}</td>
+                        <td className="px-4 py-2">{usuario.nome}</td>
+                        <td className="px-4 py-2">{usuario.email}</td>
+                        <td className="px-4 py-2">{usuario.cpf}</td>
                     </>
                 )}
-                renderAcoes={(livro) => (
+                renderAcoes={(usuario) => (
                     <>
-                        <BotaoSecundario onClick={() => navigate(`/painel/livros/editar/${livro.id_livro}`)}>
+                        <BotaoSecundario onClick={() => navigate(`/painel/usuarios/editar/${usuario.id_usuario}`)}>
                             Editar
                         </BotaoSecundario>
                         <button
-                            onClick={() => excluir(livro.id_livro)}
+                            onClick={() => excluir(usuario.id_usuario)}
                             className="text-red-500 hover:underline text-sm"
                         >
                             Excluir
@@ -60,4 +60,4 @@ function ListarLivros() {
     );
 }
 
-export default ListarLivros;
+export default ListarUsuarios;

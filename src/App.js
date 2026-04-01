@@ -6,7 +6,6 @@ import Rodape from "./componentes/Rodape";
 import CadastroUsuario from "./paginas/CadastroUsuario";
 import CadastrarAutor from "./paginas/painel/autores/CadastroAutor";
 import Entrar from "./paginas/Entrar";
-import LivroCategoria from "./paginas/LivroCategoria";
 import CadastrarLivro from "./paginas/painel/livros/CadastroLivro";
 import Biblioteca from "./paginas/Biblioteca";
 import Inicio from "./paginas/Inicio";
@@ -16,6 +15,8 @@ import Perfil from "./paginas/Perfil";
 import EditarPerfil from "./paginas/EditarPerfil";
 import Painel from "./paginas/painel/Painel";
 import ListarLivros from "./paginas/painel/livros/ListarLivros";
+import ListarAutores from "./paginas/painel/autores/ListarAutores";
+import ListarUsuarios from "./paginas/painel/usuarios/ListarUsuarios";
 
 function App() {
 
@@ -37,10 +38,14 @@ function App() {
 
           <Route path="/painel" element={<RotaProtegida><Painel /></RotaProtegida>} />
 
+          <Route path="/painel/usuarios" element={<RotaProtegida><ListarUsuarios /></RotaProtegida>}/>
+
           <Route path="/painel/livros" element={<RotaProtegida><ListarLivros /></RotaProtegida>}/>
           <Route path="/painel/cadastroLivro" element={<RotaProtegida><CadastrarLivro /></RotaProtegida>}/>
 
+          <Route path="/painel/autores" element={<RotaProtegida><ListarAutores /></RotaProtegida>}/>
           <Route path="/painel/cadastroAutor" element={<RotaProtegida><CadastrarAutor /></RotaProtegida>}/>
+
         </Routes>
       </main>
 
