@@ -31,10 +31,10 @@ function Biblioteca() {
     return (
         <main>
             <div className="p-10 min-h-screen">
-                <h1 className="text-4xl font-medium mb-2">
-                    {categoriaId ? "Livros da Categoria" : "Biblioteca"}
+                <h1 className="text-4xl font-medium mb-2 text-center">
+                    {categoriaId ? "Livros da Categoria" : "BIBLIOTECA"}
                 </h1>
-                <p className="text-muted-foreground mb-10">
+                <p className="text-muted-foreground mb-10 text-center">
                     {categoriaId
                         ? "Livros filtrados pela categoria selecionada."
                         : "Explore todos os nossos livros disponíveis."}

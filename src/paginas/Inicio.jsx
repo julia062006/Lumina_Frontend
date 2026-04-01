@@ -31,44 +31,40 @@ function Inicio() {
     }, []);
 
     useEffect(() => {
-    async function carregarLivros() {
-        try {
-            const dados = await getLivrosDestaque();
+        async function carregarLivros() {
+            try {
+                const dados = await getLivrosDestaque();
 
-            console.log("TODOS:", dados);
+                console.log("TODOS:", dados);
 
 
-            console.log("Dados brutos da API:", dados);
-console.log("Tipo do campo destaque:", typeof dados[0]?.destaque, "| Valor:", dados[0]?.destaque);
-            const destaques = dados.filter(
-                livro => livro.destaque === true || livro.destaque == 1
-            );
+                console.log("Dados brutos da API:", dados);
+                console.log("Tipo do campo destaque:", typeof dados[0]?.destaque, "| Valor:", dados[0]?.destaque);
+                const destaques = dados.filter(
+                    livro => livro.destaque === true || livro.destaque == 1
+                );
 
-            console.log("DESTAQUES:", destaques);
+                console.log("DESTAQUES:", destaques);
 
-            setLivrosDestaque(destaques);
+                setLivrosDestaque(destaques);
 
-        } catch (error) {
-            console.error("Erro ao carregar livros:", error);
+            } catch (error) {
+                console.error("Erro ao carregar livros:", error);
+            }
         }
-    }
 
-    carregarLivros();
-}, []);
+        carregarLivros();
+    }, []);
 
     return (
         <main>
             <div
-                className="p-10 min-h-screen bg-no-repeat"
-                style={{
-                    backgroundImage: `url(${bg})`,
-                    backgroundSize: "1000px",
-                    backgroundPosition: "right 35px"
-                }}
-            >
+                className="p-16 min-h-screen bg-no-repeat"style={{backgroundImage: `url(${bg})`, backgroundSize: "1000px", backgroundPosition: "right 35px"}}>
+
+                <section id="inicio" className="max-w-2xl pl-8">
                 <h1 className="text-5xl lg:text-6xl font-medium leading-tight tracking-tight">
-                    Ilumine sua <br />
-                    <span style={{ color: 'var(--lumina-purple)' }}>Leitura.</span>
+                    Ilumine sua<br />
+                    <span style={{ color: 'var(--lumina-purple)' }}>Leitura</span>
                 </h1>
 
                 <p className="text-lg text-muted-foreground max-w-lg mt-4">
@@ -83,11 +79,11 @@ console.log("Tipo do campo destaque:", typeof dados[0]?.destaque, "| Valor:", da
                         <BotaoSecundario>Criar Conta</BotaoSecundario>
                     </Link>
                 </div>
-
-                <section id="categoria" className="py-16 bg-muted/30 mt-10">
+                </section>
+                <section id="categoria" className="pt-16 bg-muted/30 mt-10">
                     <div className="container mx-auto px-6 lg:px-8">
                         <div className="text-center mb-12">
-                            <h2 className="text-3xl lg:text-4xl font-medium mb-4">
+                            <h2 className="text-3xl lg:text-4xl font-medium mb-4 mt-10">
                                 Explore por Categoria
                             </h2>
                         </div>
@@ -111,7 +107,7 @@ console.log("Tipo do campo destaque:", typeof dados[0]?.destaque, "| Valor:", da
                     </div>
                 </section>
 
-                <section id="Destaque" className="py-16 bg-muted/30 mt-10">
+                <section id="Destaque" className="py-2 bg-muted/30 mt-10">
                     <div className="container mx-auto px-6 lg:px-8">
                         <div className="text-center mb-12">
                             <h2 className="text-3xl lg:text-4xl font-medium mb-4">
@@ -120,17 +116,17 @@ console.log("Tipo do campo destaque:", typeof dados[0]?.destaque, "| Valor:", da
                         </div>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                             {livrosDestaque.map((livro) => (
-  <Card
-    key={livro.id_livro}
-    livro={{
-      title: livro.titulo,
-      author: livro.autor?.nome,
-      image: `http://localhost:3000/uploads/${livro.capa_imagem}`,
-      price: livro.preco ?? 0,
-      description: livro.descricao ?? "",
-    }}
-  />
-))}
+                                <Card
+                                    key={livro.id_livro}
+                                    livro={{
+                                        title: livro.titulo,
+                                        author: livro.autor?.nome,
+                                        image: `http://localhost:3000/uploads/${livro.capa_imagem}`,
+                                        price: livro.preco ?? 0,
+                                        description: livro.descricao ?? "",
+                                    }}
+                                />
+                            ))}
                         </div>
                     </div>
                 </section>

@@ -16,7 +16,7 @@ function ModalLivros({ autor, onFechar }) {
       <div className="bg-white rounded-2xl w-full max-w-3xl max-h-[80vh] overflow-y-auto p-6">
         
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold">Livros de {autor.nome}</h2>
+          <h2 className="text-4xl font-medium mb-2">Livros de {autor.nome}</h2>
           <button onClick={onFechar} className="text-gray-400 hover:text-gray-600">
             <X className="h-6 w-6" />
           </button>
@@ -88,7 +88,8 @@ function Autores() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-6">Autores</h1>
+      <h1 className="text-4xl font-medium mb-2 text-center">AUTORES</h1>
+      <p className="text-muted-foreground mb-10 text-center">Explore todos os autores disponíveis</p>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
         {autores.map((autor) => (
