@@ -79,7 +79,7 @@ function CadastrarAutor() {
 
                 <div className="flex gap-4 mt-4">
                     <BotaoPrimario type="submit">Cadastrar</BotaoPrimario>
-                    <BotaoSecundario onClick={() => navigate("/painel/autores")}>
+                    <BotaoSecundario type="button" onClick={() => navigate("/painel/autores")}>
                         Voltar
                     </BotaoSecundario>
                 </div>

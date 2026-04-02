@@ -167,7 +167,7 @@ function CadastrarLivro() {
 
                 <div className="flex gap-4 mt-4">
                     <BotaoPrimario type="submit">Cadastrar</BotaoPrimario>
-                    <BotaoSecundario onClick={() => navigate("/painel/livros")}>
+                    <BotaoSecundario type="button" onClick={() => navigate("/painel/livros")}>
                         Voltar
                     </BotaoSecundario>
                 </div>

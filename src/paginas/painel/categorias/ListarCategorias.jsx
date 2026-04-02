@@ -33,7 +33,7 @@ function ListarCategorias() {
                         Cadastrar
                     </BotaoPrimario>
 
-                    <BotaoSecundario onClick={() => navigate("/painel")}>
+                    <BotaoSecundario type="button" onClick={() => navigate("/painel")}>
                         Voltar
                     </BotaoSecundario>
                 </div>
@@ -57,7 +57,7 @@ function ListarCategorias() {
 
                 renderAcoes={(categoria) => (
                     <>
-                        <BotaoSecundario onClick={() => navigate(`/painel/categorias/editar/${categoria.id_categoria}`)}>
+                        <BotaoSecundario onClick={() => navigate(`/painel/editarCategoria/${categoria.id_categoria}`, { state: { categoria } })}>
                             Editar
                         </BotaoSecundario>
 

@@ -30,7 +30,7 @@ function ListarLivros() {
                     <BotaoPrimario onClick={() => navigate("/painel/cadastroLivro")}>
                         Cadastrar
                     </BotaoPrimario>
-                    <BotaoSecundario onClick={() => navigate("/painel")}>
+                    <BotaoSecundario type="button" onClick={() => navigate("/painel")}>
                         Voltar
                     </BotaoSecundario>
                 </div>
@@ -48,7 +48,7 @@ function ListarLivros() {
                 )}
                 renderAcoes={(livro) => (
                     <>
-                        <BotaoSecundario onClick={() => navigate(`/painel/livros/editar/${livro.id_livro}`)}>
+                        <BotaoSecundario onClick={() =>{ navigate(`/painel/editarLivro/${livro.id_livro}`, { state: { livro }})}}>
                             Editar
                         </BotaoSecundario>
                         <button

@@ -16,7 +16,7 @@ function ListarUsuarios() {
                     <BotaoPrimario onClick={() => navigate("/painel/cadastroUsuario")}>
                         Cadastrar
                     </BotaoPrimario>
-                    <BotaoSecundario onClick={() => navigate("/painel")}>
+                    <BotaoSecundario type="button" onClick={() => navigate("/painel")}>
                         Voltar
                     </BotaoSecundario>
                 </div>
