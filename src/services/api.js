@@ -111,6 +111,12 @@ export async function getCategorias() {
     return tratarResposta(resposta);
 }
 
+export async function getCategoriasDestaque() {
+    const resposta = await fetch("http://localhost:3000/categorias/destaque");
+    const data = await resposta.json();
+    return { ok: resposta.ok, data };
+}
+
 export async function deletarCategorias(id) {
     const resposta = await fetch(API + "/categorias/" + id, {
         method: "DELETE",
@@ -142,13 +148,10 @@ export async function getLivros() {
 }
 
 export async function getLivrosDestaque() {
-    const resposta = await fetch(API + "/livros", {
-        method: "GET"
-    });
-
+    const resposta = await fetch(API + "/livros/destaque");
 
     if (!resposta.ok) {
-        throw new Error("Erro ao buscar livros");
+        throw new Error("Erro ao buscar livros em destaque");
     }
 
     return await resposta.json();
@@ -157,9 +160,11 @@ export async function getLivrosDestaque() {
 export async function criarLivro(dados) {
     const resposta = await fetch(API + "/livros", {
         method: "POST",
-        headers: getHeaders()
+        headers: {
+            Authorization: "Bearer " + localStorage.getItem("token")
+        },
+        body: dados
     });
-
 
     return tratarResposta(resposta);
 }
