@@ -4,19 +4,19 @@ import Tabela from "../../../componentes/Tabela";
 import Paginacao from "../../../componentes/Paginacao";
 import { MENSAGENS } from "../../../utilitarios/validacoes";
 import { alertaConfirmacao, alertaSucesso, alertaErro } from "../../../utilitarios/formulario";
-import { useAutores } from "./useAutores";
+import { useCategorias } from "./useCategorias";
 
-function ListarAutores() {
+function ListarCategorias() {
     const navigate = useNavigate();
-    const { autoresPaginados, totalPaginas, paginaAtual, setPaginaAtual, excluirAutor } = useAutores();
+    const { categoriasPaginadas, totalPaginas, paginaAtual, setPaginaAtual, excluirCategoria } = useCategorias();
 
     async function excluir(id) {
         const resultado = await alertaConfirmacao();
         if (!resultado.isConfirmed) return;
 
         try {
-            await excluirAutor(id);
-            await alertaSucesso("Autor removido com sucesso!");
+            await excluirCategoria(id);
+            await alertaSucesso("Categoria removida com sucesso!");
         } catch (erro) {
             await alertaErro(MENSAGENS.ERRO_SERVIDOR);
 
@@ -26,10 +26,10 @@ function ListarAutores() {
     return (
         <div className="max-w-4xl mx-auto mt-10 px-4">
             <div className="flex items-center justify-between mb-6">
-                <h1 className="text-2xl font-semibold">Autores</h1>
+                <h1 className="text-2xl font-semibold">Categorias</h1>
 
                 <div className="flex gap-2">
-                    <BotaoPrimario onClick={() => navigate("/painel/cadastroAutor")}>
+                    <BotaoPrimario onClick={() => navigate("/painel/cadastroCategoria")}>
                         Cadastrar
                     </BotaoPrimario>
 
@@ -40,33 +40,29 @@ function ListarAutores() {
             </div>
 
             <Tabela
-                colunas={["Foto", "Nome"]}
-                dados={autoresPaginados}
+                colunas={["Nome", "Descrição"]}
+                dados={categoriasPaginadas}
 
-                renderLinha={(autor) => (
-                    <>
+                renderLinha={(categoria) => (
+                    <>  
                         <td className="px-4 py-2">
-                            <img
-                                src={`http://localhost:3000/uploads/${autor.foto}`}
-                                alt={autor.nome}
-                                className="w-16 h-20 object-cover rounded"
-                            />
+                            {categoria.nome}
                         </td>
 
                         <td className="px-4 py-2">
-                            {autor.nome}
+                            {categoria.descricao}
                         </td>
                     </>
                 )}
 
-                renderAcoes={(autor) => (
+                renderAcoes={(categoria) => (
                     <>
-                        <BotaoSecundario onClick={() => navigate(`/painel/autores/editar/${autor.id_autor}`)}>
+                        <BotaoSecundario onClick={() => navigate(`/painel/categorias/editar/${categoria.id_categoria}`)}>
                             Editar
                         </BotaoSecundario>
 
                         <button
-                            onClick={() => excluir(autor.id_autor)}
+                            onClick={() => excluir(categoria.id_categoria)}
                             className="text-red-500 hover:underline text-sm"
                         >
                             Excluir
@@ -85,4 +81,4 @@ function ListarAutores() {
     );
 }
 
-export default ListarAutores;
+export default ListarCategorias;

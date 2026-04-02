@@ -3,7 +3,7 @@ import { getUsuarios } from "../../../services/api";
 import { alertaErro } from "../../../utilitarios/formulario";
 import { MENSAGENS } from "../../../utilitarios/validacoes";
 
-const ITENS_POR_PAGINA = 5;
+const ITENS_POR_PAGINA = 10;
 
 export function useUsuarios() {
     const [usuarios, setUsuarios] = useState([]);

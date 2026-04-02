@@ -17,6 +17,8 @@ import Painel from "./paginas/painel/Painel";
 import ListarLivros from "./paginas/painel/livros/ListarLivros";
 import ListarAutores from "./paginas/painel/autores/ListarAutores";
 import ListarUsuarios from "./paginas/painel/usuarios/ListarUsuarios";
+import ListarCategorias from "./paginas/painel/categorias/ListarCategorias";
+import CadastrarCategoria from "./paginas/painel/categorias/CadastroCategoria";
 
 function App() {
 
@@ -38,13 +40,16 @@ function App() {
 
           <Route path="/painel" element={<RotaProtegida><Painel /></RotaProtegida>} />
 
-          <Route path="/painel/usuarios" element={<RotaProtegida><ListarUsuarios /></RotaProtegida>}/>
+          <Route path="/painel/usuarios" element={<RotaProtegida><ListarUsuarios /></RotaProtegida>} />
 
-          <Route path="/painel/livros" element={<RotaProtegida><ListarLivros /></RotaProtegida>}/>
-          <Route path="/painel/cadastroLivro" element={<RotaProtegida><CadastrarLivro /></RotaProtegida>}/>
+          <Route path="/painel/livros" element={<RotaProtegida><ListarLivros /></RotaProtegida>} />
+          <Route path="/painel/cadastroLivro" element={<RotaProtegida><CadastrarLivro /></RotaProtegida>} />
 
-          <Route path="/painel/autores" element={<RotaProtegida><ListarAutores /></RotaProtegida>}/>
-          <Route path="/painel/cadastroAutor" element={<RotaProtegida><CadastrarAutor /></RotaProtegida>}/>
+          <Route path="/painel/autores" element={<RotaProtegida><ListarAutores /></RotaProtegida>} />
+          <Route path="/painel/cadastroAutor" element={<RotaProtegida><CadastrarAutor /></RotaProtegida>} />
+
+          <Route path="/painel/categorias" element={<RotaProtegida><ListarCategorias /></RotaProtegida>} />
+          <Route path="/painel/cadastroCategoria" element={<RotaProtegida><CadastrarCategoria /></RotaProtegida>} />
 
         </Routes>
       </main>

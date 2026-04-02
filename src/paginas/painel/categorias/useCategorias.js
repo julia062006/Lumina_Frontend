@@ -1,39 +1,41 @@
 import { useEffect, useState } from "react";
-import { getLivros, deletarLivro } from "../../../services/api";
+import { getCategorias, deletarCategorias } from "../../../services/api";
 import { alertaErro } from "../../../utilitarios/formulario";
 import { MENSAGENS } from "../../../utilitarios/validacoes";
 
 const ITENS_POR_PAGINA = 10;
 
-export function useLivros() {
-    const [livros, setLivros] = useState([]);
+export function useCategorias() {
+    const [categorias, setCategorias] = useState([]);
     const [paginaAtual, setPaginaAtual] = useState(0);
-    
+
     async function carregar() {
         try {
-            const dados = await getLivros();
-            setLivros(dados);
+            const dados = await getCategorias();
+            setCategorias(dados.data);
         } catch {
             await alertaErro(MENSAGENS.ERRO_SERVIDOR);
         }
     }
+
     useEffect(() => {
         carregar();
     }, []);
 
-    const totalPaginas = Math.ceil(livros.length / ITENS_POR_PAGINA);
+    const totalPaginas = Math.ceil(categorias.length / ITENS_POR_PAGINA);
 
-    const livrosPaginados = livros.slice(
+    const categoriasPaginadas = categorias.slice(
         paginaAtual * ITENS_POR_PAGINA,
         (paginaAtual + 1) * ITENS_POR_PAGINA
     );
 
-
-    async function excluirLivro(id) {
-        await deletarLivro(id);
+    async function excluirCategoria(id) {
+        await deletarCategorias(id);
         await carregar();
     }
 
 
-    return { livrosPaginados, totalPaginas, paginaAtual, setPaginaAtual, excluirLivro };
+    return { categoriasPaginadas, totalPaginas, paginaAtual, setPaginaAtual, excluirCategoria };
 }
+
+

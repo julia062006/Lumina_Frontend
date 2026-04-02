@@ -1,5 +1,4 @@
 import Swal from "sweetalert2";
-import { MENSAGENS } from "./validacoes";
 
 export function criarFormData(campos) {
     const formData = new FormData();
@@ -17,6 +16,18 @@ export function alertaSucesso(mensagem) {
 
 export function alertaErro(mensagem) {
     return Swal.fire({ icon: "error", title: mensagem });
+}
+
+export function alertaConfirmacao(mensagem = "Esta ação não poderá ser desfeita.") {
+    return Swal.fire({
+        title: "Tem certeza?",
+        text: mensagem,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sim, excluir",
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: "#d33",
+    });
 }
 
 export function tratarErrosResposta(resposta, setError) {

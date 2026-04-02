@@ -2,14 +2,24 @@ import { useNavigate } from "react-router-dom";
 import { BotaoPrimario, BotaoSecundario } from "../../../componentes/Botao";
 import Tabela from "../../../componentes/Tabela";
 import Paginacao from "../../../componentes/Paginacao";
+import { MENSAGENS } from "../../../utilitarios/validacoes";
+import { alertaConfirmacao, alertaSucesso, alertaErro } from "../../../utilitarios/formulario";
 import { useLivros } from "./useLivros";
 
 function ListarLivros() {
     const navigate = useNavigate();
-    const { livrosPaginados, totalPaginas, paginaAtual, setPaginaAtual } = useLivros();
+    const { livrosPaginados, totalPaginas, paginaAtual, setPaginaAtual, excluirLivro } = useLivros();
 
-    function excluir(id) {
-        // fazer
+    async function excluir(id) {
+        const resultado = await alertaConfirmacao();
+        if (!resultado.isConfirmed) return;
+
+        try {
+            await excluirLivro(id);
+            await alertaSucesso("Livro removido com sucesso!");
+        } catch (erro) {
+            await alertaErro(MENSAGENS.ERRO_SERVIDOR);
+        }
     }
 
     return (

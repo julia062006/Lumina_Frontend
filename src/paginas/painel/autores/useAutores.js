@@ -1,23 +1,24 @@
 import { useEffect, useState } from "react";
-import { getAutores } from "../../../services/api";
+import { getAutores, deletarAutores } from "../../../services/api";
 import { alertaErro } from "../../../utilitarios/formulario";
 import { MENSAGENS } from "../../../utilitarios/validacoes";
 
-const ITENS_POR_PAGINA = 5;
+const ITENS_POR_PAGINA = 10;
 
 export function useAutores() {
     const [autores, setAutores] = useState([]);
     const [paginaAtual, setPaginaAtual] = useState(0);
 
-    useEffect(() => {
-        async function carregar() {
-            try {
-                const dados = await getAutores();
-                setAutores(dados.data);
-            } catch {
-                await alertaErro(MENSAGENS.ERRO_SERVIDOR);
-            }
+    async function carregar() {
+        try {
+            const dados = await getAutores();
+            setAutores(dados.data);
+        } catch {
+            await alertaErro(MENSAGENS.ERRO_SERVIDOR);
         }
+    }
+
+    useEffect(() => {
         carregar();
     }, []);
 
@@ -28,10 +29,13 @@ export function useAutores() {
         (paginaAtual + 1) * ITENS_POR_PAGINA
     );
 
-    return {
-        autoresPaginados,
-        totalPaginas,
-        paginaAtual,
-        setPaginaAtual,
-    };
+    async function excluirAutor(id) {
+        await deletarAutores(id);
+        await carregar();
+    }
+
+
+    return { autoresPaginados, totalPaginas, paginaAtual, setPaginaAtual, excluirAutor };
 }
+
+
