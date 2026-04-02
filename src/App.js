@@ -19,6 +19,8 @@ import ListarAutores from "./paginas/painel/autores/ListarAutores";
 import ListarUsuarios from "./paginas/painel/usuarios/ListarUsuarios";
 import ListarCategorias from "./paginas/painel/categorias/ListarCategorias";
 import CadastrarCategoria from "./paginas/painel/categorias/CadastroCategoria";
+import EditarAutor from "./paginas/painel/autores/EditarAutor";
+import Categorias from "./paginas/Categorias";
 
 function App() {
 
@@ -37,6 +39,7 @@ function App() {
           <Route path="/inicio" element={<Inicio />} />
           <Route path="/autores" element={<Autores />} />
           <Route path="/livros/autor/:id" element={<Biblioteca />} />
+          <Route path="/categorias" element={<Categorias />} />
 
           <Route path="/painel" element={<RotaProtegida><Painel /></RotaProtegida>} />
 
@@ -47,6 +50,8 @@ function App() {
 
           <Route path="/painel/autores" element={<RotaProtegida><ListarAutores /></RotaProtegida>} />
           <Route path="/painel/cadastroAutor" element={<RotaProtegida><CadastrarAutor /></RotaProtegida>} />
+          <Route path="/painel/editarAutor/:id" element={<RotaProtegida><EditarAutor /></RotaProtegida>} />
+
 
           <Route path="/painel/categorias" element={<RotaProtegida><ListarCategorias /></RotaProtegida>} />
           <Route path="/painel/cadastroCategoria" element={<RotaProtegida><CadastrarCategoria /></RotaProtegida>} />

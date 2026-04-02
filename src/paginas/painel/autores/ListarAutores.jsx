@@ -19,7 +19,6 @@ function ListarAutores() {
             await alertaSucesso("Autor removido com sucesso!");
         } catch (erro) {
             await alertaErro(MENSAGENS.ERRO_SERVIDOR);
-
         }
     }
 
@@ -61,7 +60,7 @@ function ListarAutores() {
 
                 renderAcoes={(autor) => (
                     <>
-                        <BotaoSecundario onClick={() => navigate(`/painel/autores/editar/${autor.id_autor}`)}>
+                        <BotaoSecundario onClick={() => { navigate(`/painel/editarAutor/${autor.id_autor}`, { state: { autor }})}}>
                             Editar
                         </BotaoSecundario>
 

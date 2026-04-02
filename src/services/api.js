@@ -102,6 +102,19 @@ export async function deletarAutores(id) {
     return tratarResposta(resposta);
 }
 
+export async function editarAutor(id, dados) {
+    const token = localStorage.getItem("token");
+    const resposta = await fetch(API + "/autores/" + id, {
+        method: "PUT",
+        headers: {
+            Authorization: "Bearer " + token
+        },
+        body: dados
+    });
+
+    return tratarResposta(resposta);
+}
+
 
 export async function getCategorias() {
     const resposta = await fetch(API + "/categorias", {
@@ -130,7 +143,7 @@ export async function criarCategoria(dados) {
     const resposta = await fetch(API + "/categorias", {
         method: "POST",
         headers: getHeaders(),
-        body: JSON.stringify(dados) 
+        body: JSON.stringify(dados)
     });
 
     return tratarResposta(resposta);
@@ -177,4 +190,3 @@ export async function deletarLivro(id) {
 
     return tratarResposta(resposta);
 }
-

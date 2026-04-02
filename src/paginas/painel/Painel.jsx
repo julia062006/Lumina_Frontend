@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { BotaoPrimario, BotaoSecundario } from "../../componentes/Botao";
+import { BotaoSecundario } from "../../componentes/Botao";
 
 const SECOES = [
     { titulo: "Livros", descricao: "Gerenciar livros cadastrados", rota: "/painel/livros" },
