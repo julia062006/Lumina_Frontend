@@ -18,18 +18,19 @@ async function tratarResposta(resposta) {
 
 function getHeaders() {
     const token = localStorage.getItem("token");
-
     return {
         "Content-Type": "application/json",
         Authorization: "Bearer " + token
     };
 }
 
-export async function getUsuarios() {
-    const resposta = await fetch(API + "/usuarios", {
-        headers: getHeaders()
-    });
+function getHeadersFormData() {
+    const token = localStorage.getItem("token");
+    return { Authorization: "Bearer " + token };
+}
 
+export async function getUsuarios() {
+    const resposta = await fetch(API + "/usuarios", { headers: getHeaders() });
     return tratarResposta(resposta);
 }
 
@@ -71,24 +72,27 @@ export async function getPerfil() {
     return tratarResposta(resposta);
 }
 
+export async function getAutores() {
+    const resposta = await fetch(API + "/autores");
+    return tratarResposta(resposta);
+}
+
 export async function criarAutor(dados) {
     const resposta = await fetch(API + "/autores", {
         method: "POST",
-        headers: {
-            Authorization: "Bearer " + localStorage.getItem("token")
-        },
+        headers: getHeadersFormData(),
         body: dados
     });
 
     return tratarResposta(resposta);
 }
 
-export async function getAutores() {
-    const resposta = await fetch(API + "/autores");
-
-    if (!resposta.ok) {
-        throw new Error("Erro ao buscar autores");
-    }
+export async function editarAutor(id, dados) {
+    const resposta = await fetch(API + "/autores/" + id, {
+        method: "PUT",
+        headers: getHeadersFormData(),
+        body: dados
+    });
 
     return tratarResposta(resposta);
 }
@@ -102,40 +106,13 @@ export async function deletarAutores(id) {
     return tratarResposta(resposta);
 }
 
-export async function editarAutor(id, dados) {
-    const token = localStorage.getItem("token");
-    const resposta = await fetch(API + "/autores/" + id, {
-        method: "PUT",
-        headers: {
-            Authorization: "Bearer " + token
-        },
-        body: dados
-    });
-
-    return tratarResposta(resposta);
-}
-
-
 export async function getCategorias() {
-    const resposta = await fetch(API + "/categorias", {
-        method: "GET"
-    });
-
+    const resposta = await fetch(API + "/categorias");
     return tratarResposta(resposta);
 }
 
 export async function getCategoriasDestaque() {
-    const resposta = await fetch("http://localhost:3000/categorias/destaque");
-    const data = await resposta.json();
-    return { ok: resposta.ok, data };
-}
-
-export async function deletarCategorias(id) {
-    const resposta = await fetch(API + "/categorias/" + id, {
-        method: "DELETE",
-        headers: getHeaders()
-    });
-
+    const resposta = await fetch(API + "/categorias/destaque");
     return tratarResposta(resposta);
 }
 
@@ -159,33 +136,39 @@ export async function editarCategoria(id, dados) {
     return tratarResposta(resposta);
 }
 
+export async function deletarCategorias(id) {
+    const resposta = await fetch(API + "/categorias/" + id, {
+        method: "DELETE",
+        headers: getHeaders()
+    });
+
+    return tratarResposta(resposta);
+}
 
 export async function getLivros() {
     const resposta = await fetch(API + "/livros");
-
-    if (!resposta.ok) {
-        throw new Error("Erro ao buscar livros");
-    }
-
-    return await resposta.json();
+    return tratarResposta(resposta);
 }
 
 export async function getLivrosDestaque() {
     const resposta = await fetch(API + "/livros/destaque");
-
-    if (!resposta.ok) {
-        throw new Error("Erro ao buscar livros em destaque");
-    }
-
-    return await resposta.json();
+    return tratarResposta(resposta);
 }
 
 export async function criarLivro(dados) {
     const resposta = await fetch(API + "/livros", {
         method: "POST",
-        headers: {
-            Authorization: "Bearer " + localStorage.getItem("token")
-        },
+        headers: getHeadersFormData(),
+        body: dados
+    });
+
+    return tratarResposta(resposta);
+}
+
+export async function editarLivro(id, dados) {
+    const resposta = await fetch(API + "/livros/" + id, {
+        method: "PUT",
+        headers: getHeadersFormData(),
         body: dados
     });
 
@@ -196,19 +179,6 @@ export async function deletarLivro(id) {
     const resposta = await fetch(API + "/livros/" + id, {
         method: "DELETE",
         headers: getHeaders()
-    });
-
-    return tratarResposta(resposta);
-}
-
-export async function editarLivro(id, dados) {
-    const token = localStorage.getItem("token");
-    const resposta = await fetch(API + "/livros/" + id, {
-        method: "PUT",
-        headers: {
-            Authorization: "Bearer " + token
-        },
-        body: dados
     });
 
     return tratarResposta(resposta);

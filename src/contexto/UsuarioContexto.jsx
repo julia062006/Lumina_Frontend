@@ -57,11 +57,13 @@ export function UsuarioProvider({ children }) {
         setUsuario(dadosUsuario);
         setToken(tokenRecebido);
     }
+    
+    const [saindoDaConta, setSaindoDaConta] = useState(false);
 
     function sair() {
+        setSaindoDaConta(true);
         localStorage.removeItem(STORAGE_KEYS.TOKEN);
         localStorage.removeItem(STORAGE_KEYS.USUARIO);
-
         setUsuario(null);
         setToken(null);
     }
@@ -78,9 +80,10 @@ export function UsuarioProvider({ children }) {
         }
     }
 
+
     return (
         <UsuarioContexto.Provider
-            value={{ usuario, token, entrar, sair, atualizarUsuarioContexto }}
+            value={{ usuario, token, entrar, sair, atualizarUsuarioContexto, saindoDaConta }}
         >
             {children}
         </UsuarioContexto.Provider>
@@ -96,3 +99,4 @@ export function useUsuario() {
 
     return contexto;
 }
+

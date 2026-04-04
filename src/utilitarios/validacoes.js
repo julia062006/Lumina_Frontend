@@ -25,8 +25,22 @@ export const validacoesTexto = (mensagem) => ({
 });
 
 export const validacoesNumero = (mensagem) => ({
-    required: mensagem,
-    min: { value: 0, message: "O valor não pode ser negativo" },
+     required: mensagem,
+    onChange: (e) => {
+        let valor = e.target.value.replace(/\D/g, "");
+        
+        const numero = (parseInt(valor || "0") / 100).toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+        });
+
+        e.target.value = numero;
+    },
+    validate: (value) => {
+        const numero = parseFloat(value.replace(/[R$\s.]/g, "").replace(",", "."));
+        if (isNaN(numero) || numero <= 0) return "O valor deve ser maior que zero";
+        return true;
+    }
 });
 
 export const validacoesSelect = (mensagem) => ({

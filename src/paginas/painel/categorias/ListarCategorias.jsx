@@ -40,18 +40,15 @@ function ListarCategorias() {
             </div>
 
             <Tabela
-                colunas={["Nome", "Descrição"]}
+                colunas={["Nome", "Descrição", "Destaque"]}
                 dados={categoriasPaginadas}
 
                 renderLinha={(categoria) => (
                     <>  
-                        <td className="px-4 py-2">
-                            {categoria.nome}
-                        </td>
+                        <td className="px-4 py-2">{categoria.nome}</td>
+                        <td className="px-4 py-2">{categoria.descricao}</td>
+                        <td className="px-4 py-2">{categoria.destaque === true || categoria.destaque === "true" ? "Sim" : "Não"}</td>
 
-                        <td className="px-4 py-2">
-                            {categoria.descricao}
-                        </td>
                     </>
                 )}
 

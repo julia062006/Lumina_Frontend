@@ -82,10 +82,10 @@ function CadastrarLivro() {
                     error={errors.descricao}
                 />
 
-                <Input
+                 <Input
                     label="Preço"
                     name="preco"
-                    type="number"
+                    type="text"
                     placeholder="Digite o preço"
                     register={(name) => register(name, validacoesNumero("O preço é obrigatório"))}
                     error={errors.preco}

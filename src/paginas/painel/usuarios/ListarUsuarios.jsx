@@ -3,6 +3,7 @@ import { BotaoPrimario, BotaoSecundario } from "../../../componentes/Botao";
 import Tabela from "../../../componentes/Tabela";
 import Paginacao from "../../../componentes/Paginacao";
 import { useUsuarios } from "./useUsuarios";
+import { formatarCPF } from "../../../utilitarios/formatadores";
 
 function ListarUsuarios() {
     const navigate = useNavigate();
@@ -13,9 +14,7 @@ function ListarUsuarios() {
             <div className="flex items-center justify-between mb-6">
                 <h1 className="text-2xl font-semibold">Usuários</h1>
                 <div className="flex gap-2">
-                    <BotaoPrimario onClick={() => navigate("/painel/cadastroUsuario")}>
-                        Cadastrar
-                    </BotaoPrimario>
+                
                     <BotaoSecundario type="button" onClick={() => navigate("/painel")}>
                         Voltar
                     </BotaoSecundario>
@@ -29,7 +28,7 @@ function ListarUsuarios() {
                     <>
                         <td className="px-4 py-2">{usuario.nome}</td>
                         <td className="px-4 py-2">{usuario.email}</td>
-                        <td className="px-4 py-2">{usuario.cpf}</td>
+                        <td className="px-4 py-2">{formatarCPF(usuario.cpf)}</td>
                     </>
                 )}
             />

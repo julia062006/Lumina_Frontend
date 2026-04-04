@@ -5,7 +5,7 @@ import { editarLivro, getAutores, getCategorias } from "../../../services/api";
 import { BotaoPrimario, BotaoSecundario } from "../../../componentes/Botao";
 import Input from "../../../componentes/Input";
 import Formulario from "../../../componentes/Formulario";
-import { validacoesNome, validacoesTexto, MENSAGENS, validacoesSelect } from "../../../utilitarios/validacoes";
+import { validacoesNome, validacoesTexto, MENSAGENS, validacoesSelect, validacoesNumero } from "../../../utilitarios/validacoes";
 import { alertaSucesso, alertaErro } from "../../../utilitarios/formulario";
 
 function EditarLivro() {
@@ -25,10 +25,10 @@ function EditarLivro() {
         }
         setValue("titulo", livro.titulo);
         setValue("descricao", livro.descricao);
-        setValue("preco", livro.preco);
+        setValue("preco", Number(livro.preco).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }));
         setValue("id_autor", livro.id_autor);
         setValue("id_categoria", livro.id_categoria);
-        setValue("destaque", livro.destaque);
+        setValue("destaque", String(livro.destaque));
 
         async function carregarSelects() {
             const [resAutores, resCategorias] = await Promise.all([
@@ -46,7 +46,7 @@ function EditarLivro() {
             const formData = new FormData();
             formData.append("titulo", dados.titulo);
             formData.append("descricao", dados.descricao);
-            formData.append("preco", dados.preco);
+            formData.append("preco", dados.preco.replace(/[R$\s.]/g, "").replace(",", "."));
             formData.append("id_autor", dados.id_autor);
             formData.append("id_categoria", dados.id_categoria);
             formData.append("destaque", dados.destaque);
@@ -94,8 +94,9 @@ function EditarLivro() {
                 <Input
                     label="Preço"
                     name="preco"
-                    type="number"
-                    register={(name) => register(name, { required: "Preço obrigatório" })}
+                    type="text"
+                    placeholder="Digite o preço"
+                    register={(name) => register(name, validacoesNumero("O preço é obrigatório"))}
                     error={errors.preco}
                 />
 

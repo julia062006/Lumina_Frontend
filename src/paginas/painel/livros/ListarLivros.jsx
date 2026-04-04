@@ -37,18 +37,19 @@ function ListarLivros() {
             </div>
 
             <Tabela
-                colunas={["Título", "Autor", "Preço"]}
+                colunas={["Título", "Autor", "Preço", "Destaque"]}
                 dados={livrosPaginados}
                 renderLinha={(livro) => (
                     <>
                         <td className="px-4 py-2">{livro.titulo}</td>
                         <td className="px-4 py-2">{livro.autor?.nome}</td>
-                        <td className="px-4 py-2">R$ {livro.preco}</td>
+                        <td className="px-4 py-2">{Number(livro.preco).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</td>
+                        <td className="px-4 py-2">{livro.destaque === true || livro.destaque === "true" ? "Sim" : "Não"}</td>
                     </>
                 )}
                 renderAcoes={(livro) => (
                     <>
-                        <BotaoSecundario onClick={() =>{ navigate(`/painel/editarLivro/${livro.id_livro}`, { state: { livro }})}}>
+                        <BotaoSecundario onClick={() => { navigate(`/painel/editarLivro/${livro.id_livro}`, { state: { livro } }) }}>
                             Editar
                         </BotaoSecundario>
                         <button

@@ -8,11 +8,15 @@ const ITENS_POR_PAGINA = 10;
 export function useLivros() {
     const [livros, setLivros] = useState([]);
     const [paginaAtual, setPaginaAtual] = useState(0);
-    
+
     async function carregar() {
         try {
-            const dados = await getLivros();
-            setLivros(dados);
+            const resposta = await getLivros();
+            if (resposta.ok) {
+                setLivros(resposta.data);
+            } else {
+                await alertaErro(MENSAGENS.ERRO_SERVIDOR);
+            }
         } catch {
             await alertaErro(MENSAGENS.ERRO_SERVIDOR);
         }
