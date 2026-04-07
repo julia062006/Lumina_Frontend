@@ -5,6 +5,7 @@ import bh from "../imagens/planofundo2.png";
 import React, { useEffect, useState } from "react";
 import Card from "../componentes/Card";
 import { getCategoriasDestaque, getLivrosDestaque } from "../services/api";
+import { useUsuario } from "../contexto/UsuarioContexto";
 
 function mapearLivroParaCard(livro) {
     return {
@@ -23,6 +24,7 @@ function Inicio() {
     const [livrosDestaque, setLivrosDestaque] = useState([]);
     const [loadingLivros, setLoadingLivros] = useState(true);        // ← ADICIONAR
     const [erroLivros, setErroLivros] = useState(null);
+    const { token } = useUsuario();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -46,8 +48,12 @@ function Inicio() {
     useEffect(() => {
         async function carregarLivros() {
             try {
-                const dados = await getLivrosDestaque();
-                setLivrosDestaque(dados);
+                const resposta = await getLivrosDestaque();
+                if (resposta.ok) {
+                    setLivrosDestaque(resposta.data);
+                } else {
+                    setErroLivros("Não foi possível carregar os livros em destaque.");
+                }
             } catch (error) {
                 setErroLivros("Não foi possível carregar os livros em destaque.");
             } finally {
@@ -86,9 +92,11 @@ function Inicio() {
                             <BotaoPrimario onClick={() => navigate("/biblioteca")}>
                                 Explorar Livros
                             </BotaoPrimario>
-                            <Link to="/cadastroUsuario">
-                                <BotaoSecundario className="!bg-white text-black">Criar Conta</BotaoSecundario>
-                            </Link>
+                            {!token && (
+                                <Link to="/cadastroUsuario">
+                                    <BotaoSecundario className="!bg-white text-black">Criar Conta</BotaoSecundario>
+                                </Link>
+                            )}
                         </div>
                     </section>
 
