@@ -1,5 +1,56 @@
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
+import LivroCartao from "../componentes/LivroCartao";
+import { BotaoSecundario } from "../componentes/Botao";
+import { BotaoPrimario } from "../componentes/Botao";
+
+function mapearLivroParaCartao(livro) {
+  return {
+    title:       livro.titulo,
+    author:      livro.autor?.nome,
+    image:       `http://localhost:3000/uploads/${livro.capa_imagem}`,
+    description: livro.descricao ?? "",
+    urlPdf:      livro.arquivo_pdf ?? "",
+  };
+}
+
+function ModalAutor({ autor, onFechar }) {
+  useEffect(() => {
+    const handler = (e) => e.key === "Escape" && onFechar();
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [onFechar]);
+
+  return (
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+      onClick={onFechar}
+    >
+      <div
+        className="bg-white rounded-2xl max-w-lg w-full p-6 flex gap-5"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <img
+          src={`http://localhost:3000/uploads/${autor.foto}`}
+          alt={autor.nome}
+          className="w-44 h-64 object-cover rounded-xl shrink-0"
+        />
+        <div className="flex flex-col">
+          <h2 className="text-lg font-medium">{autor.nome}</h2>
+          <p className="text-sm text-gray-600 leading-relaxed flex-1 overflow-y-auto max-h-48 mt-2">
+            {autor.biografia}
+          </p>
+          <button
+            onClick={onFechar}
+            className="mt-4 w-full py-2 text-sm rounded-xl border border-gray-200 hover:bg-gray-50 transition-colors"
+          >
+            Fechar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function ModalLivros({ autor, onFechar }) {
   const [livros, setLivros] = useState([]);
@@ -11,12 +62,23 @@ function ModalLivros({ autor, onFechar }) {
       .catch((err) => console.error("Erro ao buscar livros:", err));
   }, [autor]);
 
+  useEffect(() => {
+    const handler = (e) => e.key === "Escape" && onFechar();
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [onFechar]);
+
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl w-full max-w-3xl max-h-[80vh] overflow-y-auto p-6">
-        
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+      onClick={onFechar}
+    >
+      <div
+        className="bg-white rounded-2xl w-full max-w-3xl max-h-[80vh] overflow-y-auto p-6"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-4xl font-medium mb-2">Livros de {autor.nome}</h2>
+          <h2 className="text-4xl font-medium">Livros de {autor.nome}</h2>
           <button onClick={onFechar} className="text-gray-400 hover:text-gray-600">
             <X className="h-6 w-6" />
           </button>
@@ -27,22 +89,10 @@ function ModalLivros({ autor, onFechar }) {
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             {livros.map((livro) => (
-              <div key={livro.id_livro} className="group bg-white rounded-2xl overflow-hidden border border-gray-200 hover:shadow-lg transition-all hover:-translate-y-1">
-                <div className="aspect-[3/4] overflow-hidden bg-gray-100">
-                  <img
-                    src={`http://localhost:3000/uploads/${livro.capa_imagem}`}
-                    alt={livro.titulo}
-                    className="h-full w-full object-cover transition-transform group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-3">
-                  <h3 className="font-medium text-sm line-clamp-2 mb-1">{livro.titulo}</h3>
-                  <p className="text-xs text-gray-500 line-clamp-2 mb-2">{livro.descricao}</p>
-                  <span className="font-semibold text-sm text-[#7573A8]">
-                    R$ {Number(livro.preco).toFixed(2)}
-                  </span>
-                </div>
-              </div>
+              <LivroCartao
+                key={livro.id_livro}
+                livro={mapearLivroParaCartao(livro)}
+              />
             ))}
           </div>
         )}
@@ -51,7 +101,7 @@ function ModalLivros({ autor, onFechar }) {
   );
 }
 
-function CardAutor({ autor, onVerLivros }) {
+function CardAutor({ autor, onVerMais, onVerLivros }) {
   return (
     <div className="group relative bg-white rounded-2xl overflow-hidden border border-gray-200 transition-all hover:shadow-lg hover:-translate-y-1">
       <div className="aspect-[3/4] overflow-hidden bg-gray-100">
@@ -62,14 +112,21 @@ function CardAutor({ autor, onVerLivros }) {
         />
       </div>
       <div className="p-5">
-        <h3 className="font-medium mb-1 line-clamp-2">{autor.nome}</h3>
-        <p className="text-xs text-gray-500 mb-4 line-clamp-3">{autor.biografia}</p>
-        <button
-          onClick={() => onVerLivros(autor)}
-          className="w-full flex items-center justify-center gap-2 bg-[#7573A8] text-white rounded-xl py-2 px-4 text-sm font-medium hover:bg-[#5f5d8f] transition-colors"
-        >
-          Ver Livros
-        </button>
+        <h3 className="font-medium mb-4 line-clamp-2">{autor.nome}</h3>
+        <div className="flex gap-2">
+          <BotaoPrimario
+            onClick={() => onVerLivros(autor)}
+            className="flex-1 flex justify-center items-center"
+          >
+            Ver Livros
+          </BotaoPrimario>
+          <BotaoSecundario 
+            onClick={() => onVerMais(autor)}
+            className="flex-1 flex justify-center items-center"
+          >
+            Ver mais
+          </BotaoSecundario>
+        </div>
       </div>
     </div>
   );
@@ -77,7 +134,8 @@ function CardAutor({ autor, onVerLivros }) {
 
 function Autores() {
   const [autores, setAutores] = useState([]);
-  const [autorSelecionado, setAutorSelecionado] = useState(null);
+  const [autorModal, setAutorModal] = useState(null);
+  const [autorLivros, setAutorLivros] = useState(null);
 
   useEffect(() => {
     fetch("http://localhost:3000/autores")
@@ -96,15 +154,23 @@ function Autores() {
           <CardAutor
             key={autor.id_autor}
             autor={autor}
-            onVerLivros={setAutorSelecionado}
+            onVerMais={setAutorModal}
+            onVerLivros={setAutorLivros}
           />
         ))}
       </div>
 
-      {autorSelecionado && (
+      {autorModal && (
+        <ModalAutor
+          autor={autorModal}
+          onFechar={() => setAutorModal(null)}
+        />
+      )}
+
+      {autorLivros && (
         <ModalLivros
-          autor={autorSelecionado}
-          onFechar={() => setAutorSelecionado(null)}
+          autor={autorLivros}
+          onFechar={() => setAutorLivros(null)}
         />
       )}
     </div>

@@ -3,17 +3,19 @@ import { BotaoPrimario, BotaoSecundario } from "../componentes/Botao";
 import bg from "../imagens/livros5.png";
 import bh from "../imagens/planofundo2.png";
 import React, { useEffect, useState } from "react";
-import Card from "../componentes/Card";
+import LivroCartao from "../componentes/LivroCartao";
+import LivroModal from "../componentes/LivroModal";
 import { getCategoriasDestaque, getLivrosDestaque } from "../services/api";
 import { useUsuario } from "../contexto/UsuarioContexto";
+
 
 function mapearLivroParaCard(livro) {
     return {
         title: livro.titulo,
         author: livro.autor?.nome,
         image: `http://localhost:3000/uploads/${livro.capa_imagem}`,
-        price: livro.preco ?? 0,
         description: livro.descricao ?? "",
+        urlPdf: livro.arquivo_pdf ?? "",   // ← campo novo
     };
 }
 
@@ -155,7 +157,7 @@ function Inicio() {
                                 <p className="text-center col-span-4 text-red-500">{erroLivros}</p>
                             ) : (
                                 livrosDestaque.map((livro) => (
-                                    <Card key={livro.id_livro} livro={mapearLivroParaCard(livro)} />
+                                    <LivroCartao key={livro.id_livro} livro={mapearLivroParaCard(livro)} />
                                 ))
                             )}
                         </div>

@@ -14,7 +14,7 @@ function Perfil() {
     }
 
     return (
-        <div className="bg-gradient-to-b from-[#005DAA] to-[#7851A9] -mt-6 -mb-24 p-24">
+        <div className="bg-gradient-to-b from-[#5D5E98] to-[#80619C] -mt-6 -mb-24 p-24">
             <div className="max-w-md mx-auto p-6 border rounded-lg shadow bg-white">
 
                 <div className="flex items-center justify-between mb-4">

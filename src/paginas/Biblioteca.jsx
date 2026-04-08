@@ -1,6 +1,16 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import Card from "../componentes/Card";
+import LivroCartao from "../componentes/LivroCartao";
+
+function mapearLivroParaCartao(livro) {
+  return {
+    title:       livro.titulo,
+    author:      livro.autor?.nome,
+    image:       `http://localhost:3000/uploads/${livro.capa_imagem}`,
+    description: livro.descricao ?? "",
+    urlPdf:      livro.arquivo_pdf ?? "",
+  };
+}
 
 function Biblioteca() {
     const [searchParams] = useSearchParams();
@@ -49,15 +59,9 @@ function Biblioteca() {
                 ) : (
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                         {livros.map((livro) => (
-                            <Card
+                            <LivroCartao
                                 key={livro.id_livro}
-                                livro={{
-                                    title: livro.titulo,
-                                    author: livro.autor?.nome,
-                                    image: `http://localhost:3000/uploads/${livro.capa_imagem}`,
-                                    price: livro.preco ?? 0,
-                                    description: livro.descricao ?? "",
-                                }}
+                                livro={mapearLivroParaCartao(livro)}
                             />
                         ))}
                     </div>
