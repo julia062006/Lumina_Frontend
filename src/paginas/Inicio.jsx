@@ -4,7 +4,6 @@ import bg from "../imagens/livros5.png";
 import bh from "../imagens/planofundo2.png";
 import React, { useEffect, useState } from "react";
 import LivroCartao from "../componentes/LivroCartao";
-import LivroModal from "../componentes/LivroModal";
 import { getCategoriasDestaque, getLivrosDestaque } from "../services/api";
 import { useUsuario } from "../contexto/UsuarioContexto";
 
@@ -15,7 +14,7 @@ function mapearLivroParaCard(livro) {
         author: livro.autor?.nome,
         image: `http://localhost:3000/uploads/${livro.capa_imagem}`,
         description: livro.descricao ?? "",
-        urlPdf: livro.arquivo_pdf ?? "",   // ← campo novo
+        urlPdf: livro.arquivo_pdf ?? "", 
     };
 }
 
