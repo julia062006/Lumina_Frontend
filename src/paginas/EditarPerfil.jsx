@@ -11,6 +11,7 @@ import { useUsuario } from "../contexto/UsuarioContexto";
 import { mascaraCPF } from "../utilitarios/formatadores";
 import { validacoesNome, validacoesSenha, validacoesConfirmarSenha, validacoesCPF, MENSAGENS } from "../utilitarios/validacoes";
 import { alertaSucesso, alertaErro, tratarErrosResposta } from "../utilitarios/formulario";
+import fundo from "../imagens/planofundo2.png";
 
 function prepararDados(dados, email) {
     const copia = { ...dados, email };
@@ -67,59 +68,65 @@ function EditarPerfil() {
     if (!usuario) return null;
 
     return (
-        <div className="bg-black">
-            <Formulario titulo="Editar Perfil" onSubmit={handleSubmit(salvar)}>
+        <div style={{
+        backgroundImage: `url(${fundo})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",}}className="min-h-screen -mt-6 -mb-24 p-24">
+            <div>
+                <Formulario titulo="Editar Perfil" onSubmit={handleSubmit(salvar)}>
 
-                <Input
-                    label="Nome"
-                    name="nome"
-                    register={(name) => register(name, validacoesNome)}
-                    error={errors.nome}
-                />
+                    <Input
+                        label="Nome"
+                        name="nome"
+                        register={(name) => register(name, validacoesNome)}
+                        error={errors.nome}
+                    />
 
-                <Input
-                    label="Email"
-                    name="email"
-                    register={(name) => register(name)}
-                    error={errors.email}
-                    disabled
-                />
+                    <Input
+                        label="Email"
+                        name="email"
+                        register={(name) => register(name)}
+                        error={errors.email}
+                        disabled
+                    />
 
-                <p className="text-sm text-gray-500 -mt-2">
-                    O email não pode ser alterado
-                </p>
+                    <p className="text-sm text-gray-500 -mt-2">
+                        O email não pode ser alterado
+                    </p>
 
-                <InputSenha
-                    label="Nova Senha"
-                    name="senha"
-                    placeholder="Digite a nova senha (opcional)"
-                    register={(name) => register(name, validacoesSenha(true))}
-                    error={errors.senha}
-                />
+                    <InputSenha
+                        label="Nova Senha"
+                        name="senha"
+                        placeholder="Digite a nova senha (opcional)"
+                        register={(name) => register(name, validacoesSenha(true))}
+                        error={errors.senha}
+                    />
 
-                <InputSenha
-                    label="Confirmar Nova Senha"
-                    name="confirmarSenha"
-                    placeholder="Confirme a nova senha"
-                    register={(name) => register(name, validacoesConfirmarSenha(getSenha))}
-                    error={errors.confirmarSenha}
-                />
+                    <InputSenha
+                        label="Confirmar Nova Senha"
+                        name="confirmarSenha"
+                        placeholder="Confirme a nova senha"
+                        register={(name) => register(name, validacoesConfirmarSenha(getSenha))}
+                        error={errors.confirmarSenha}
+                    />
 
-                <Input
-                    label="CPF"
-                    name="cpf"
-                    register={(name) => register(name, validacoesCPF)}
-                    error={errors.cpf}
-                />
+                    <Input
+                        label="CPF"
+                        name="cpf"
+                        register={(name) => register(name, validacoesCPF)}
+                        error={errors.cpf}
+                    />
 
-                <div className="flex gap-4 mt-4 items-center">
-                    <BotaoPrimario type="submit">Salvar</BotaoPrimario>
-                    <BotaoSecundario type="button" onClick={() => navigate("/perfil")}>
-                        Cancelar
-                    </BotaoSecundario>
-                </div>
+                    <div className="flex gap-4 mt-4 items-center">
+                        <BotaoPrimario type="submit">Salvar</BotaoPrimario>
+                        <BotaoSecundario type="button" onClick={() => navigate("/perfil")}>
+                            Cancelar
+                        </BotaoSecundario>
+                    </div>
 
-            </Formulario>
+                </Formulario>
+            </div>
         </div>
     );
 }
