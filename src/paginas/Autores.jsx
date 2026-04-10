@@ -145,7 +145,8 @@ function Autores() {
   }, []);
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <main>
+      <div className="max-w-6xl mx-auto px-4 py-8">
       <h1 className="text-4xl font-medium mb-2 text-center">AUTORES</h1>
       <p className="text-muted-foreground mb-10 text-center">Explore todos os autores disponíveis</p>
 
@@ -174,6 +175,7 @@ function Autores() {
         />
       )}
     </div>
+    </main>
   );
 }
 

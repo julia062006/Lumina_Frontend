@@ -17,7 +17,7 @@ function Categorias() {
                 } else {
                     setErro("Não foi possível carregar as categorias.");
                 }
-            } catch (erro) {
+            } catch {
                 setErro("Não foi possível carregar as categorias.");
             } finally {
                 setLoading(false);
@@ -33,7 +33,9 @@ function Categorias() {
     function renderizarConteudo() {
         if (loading) return <p className="text-center">Carregando categorias...</p>;
         if (erro) return <p className="text-center text-red-500">{erro}</p>;
-        if (categorias.length === 0) return <p className="text-center text-muted-foreground">Nenhuma categoria encontrada.</p>;
+        if (categorias.length === 0) {
+            return <p className="text-center text-muted-foreground">Nenhuma categoria encontrada.</p>;
+        }
 
         return (
             <div className="max-w-6xl mx-auto px-6">
@@ -43,13 +45,13 @@ function Categorias() {
                             key={categoria.id_categoria}
                             onClick={() => navegarParaCategoria(categoria.id_categoria)}
                             className="group w-full p-8 rounded-2xl bg-white border border-border/40 
-                   transition-all duration-300 
-                   hover:-translate-y-2 hover:shadow-xl hover:shadow-purple-400/40 
-                   hover:border-purple-300
-                   flex flex-col items-center text-center"
+                                transition-all duration-300 
+                                hover:-translate-y-2 hover:shadow-xl hover:shadow-purple-400/40 
+                                hover:border-purple-300
+                                flex flex-col items-center text-center"
                         >
                             <h3 className="text-lg font-semibold text-gray-800 
-                       group-hover:text-[var(--lumina-purple)] transition-colors">
+                                group-hover:text-[var(--lumina-purple)] transition-colors">
                                 {categoria.nome}
                             </h3>
 
@@ -66,9 +68,11 @@ function Categorias() {
     }
 
     return (
-        <main>
-            <div className="p-10 min-h-screen">
-                <h1 className="text-4xl font-medium mb-2 text-center">CATEGORIAS</h1>
+        <main className="min-h-screen bg-[#f5f6ff]">
+            <div className="py-10">
+                <h1 className="text-4xl font-medium mb-2 text-center tracking-widest text-[#425B98]">
+                    CATEGORIAS
+                </h1>
                 <p className="text-muted-foreground mb-10 text-center">
                     Explore nosso acervo por categoria.
                 </p>

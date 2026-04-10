@@ -67,7 +67,7 @@ function EditarPerfil() {
     if (!usuario) return null;
 
     return (
-        <div>
+        <div className="bg-black">
             <Formulario titulo="Editar Perfil" onSubmit={handleSubmit(salvar)}>
 
                 <Input

@@ -1,36 +1,44 @@
 import { useNavigate } from "react-router-dom";
 import { BotaoSecundario } from "../../componentes/Botao";
+import CardPainel from "../../componentes/PainelCartao";
+import { Book, User, Users, Tag } from "lucide-react";
 
 const SECOES = [
-    { titulo: "Livros", descricao: "Gerenciar livros cadastrados", rota: "/painel/livros" },
-    { titulo: "Autores", descricao: "Gerenciar autores cadastrados", rota: "/painel/autores" },
-    { titulo: "Categorias", descricao: "Gerenciar categorias", rota: "/painel/categorias" },
-    { titulo: "Usuários", descricao: "Visualizar usuários cadastrados", rota: "/painel/usuarios" },
+    { titulo: "Livros", descricao: "Gerenciar livros cadastrados", rota: "/painel/livros", icone: Book, cor: "blue" },
+    { titulo: "Autores", descricao: "Gerenciar autores cadastrados", rota: "/painel/autores", icone: User, cor: "green" },
+    { titulo: "Categorias", descricao: "Gerenciar categorias", rota: "/painel/categorias", icone: Tag, cor: "purple" },
+    { titulo: "Usuários", descricao: "Visualizar usuários cadastrados", rota: "/painel/usuarios", icone: Users, cor: "pink" },
 ];
 
 function Painel() {
     const navigate = useNavigate();
 
     return (
-        <div className="max-w-4xl mx-auto mt-10 px-4">
-            <div className="flex items-center justify-between mb-8">
-                <h1 className="text-2xl font-semibold">Painel</h1>
-                <BotaoSecundario onClick={() => navigate("/")}>
-                    Voltar
-                </BotaoSecundario>
-            </div>
+        <div className="min-h-screen bg-blue-50">
+            <div className="max-w-4xl mx-auto pt-10 px-4 pb-10">
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {SECOES.map((secao) => (
-                    <div
-                        key={secao.rota}
-                        onClick={() => navigate(secao.rota)}
-                        className="border rounded-lg p-6 cursor-pointer hover:shadow-md transition"
-                    >
-                        <h2 className="text-lg font-medium mb-1">{secao.titulo}</h2>
-                        <p className="text-sm text-gray-500">{secao.descricao}</p>
-                    </div>
-                ))}
+                <div className="flex items-center justify-between mb-8">
+                    <h1 className="text-2xl font-semibold">PAINEL</h1>
+
+                    <BotaoSecundario 
+                        onClick={() => navigate("/")} className="bg-white">
+                        Voltar
+                    </BotaoSecundario>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {SECOES.map((secao) => (
+                        <CardPainel
+                            key={secao.rota}
+                            titulo={secao.titulo}
+                            descricao={secao.descricao}
+                            icone={secao.icone}
+                            cor={secao.cor}
+                            onClick={() => navigate(secao.rota)}
+                        />
+                    ))}
+                </div>
+
             </div>
         </div>
     );

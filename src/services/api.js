@@ -155,6 +155,11 @@ export async function getLivrosDestaque() {
     return tratarResposta(resposta);
 }
 
+export async function getLivrosPorAutor(id) {
+    const resposta = await fetch(API + "/autores/" + id + "/livros");
+    return tratarResposta(resposta);
+}
+
 export async function criarLivro(dados) {
     const resposta = await fetch(API + "/livros", {
         method: "POST",

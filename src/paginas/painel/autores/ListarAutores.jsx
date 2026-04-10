@@ -25,7 +25,7 @@ function ListarAutores() {
     return (
         <div className="max-w-4xl mx-auto mt-10 px-4">
             <div className="flex items-center justify-between mb-6">
-                <h1 className="text-2xl font-semibold">Autores</h1>
+                <h1 className="text-2xl font-semibold">AUTORES</h1>
 
                 <div className="flex gap-2">
                     <BotaoPrimario onClick={() => navigate("/painel/cadastroAutor")}>

@@ -24,7 +24,7 @@ function Inicio() {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [livrosDestaque, setLivrosDestaque] = useState([]);
-    const [loadingLivros, setLoadingLivros] = useState(true);        // ← ADICIONAR
+    const [loadingLivros, setLoadingLivros] = useState(true);
     const [erroLivros, setErroLivros] = useState(null);
     const { token } = useUsuario();
     const navigate = useNavigate();
@@ -71,10 +71,7 @@ function Inicio() {
                 <div
                     className="p-16 min-h-screen bg-no-repeat"
                     style={{
-                        backgroundImage: `
-      url(${bg}), 
-      url(${bh})
-    `,
+                        backgroundImage: `url(${bg}), url(${bh})`,
                         backgroundSize: "1000px, cover",
                         backgroundPosition: "right 35px, center",
                         backgroundRepeat: "no-repeat, no-repeat"
