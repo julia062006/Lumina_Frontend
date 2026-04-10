@@ -1,15 +1,10 @@
-import { useEffect } from "react";
 import { BotaoPrimario } from "./Botao";
 import { BotaoSecundario } from "./Botao";
-
+import { UseModalFecharEsc } from "../hooks/UseModalFecharEsc";
 const API = "http://localhost:3000";
 
 export default function LivroModal({ livro, onFechar }) {
-  useEffect(() => {
-    const handler = (e) => e.key === "Escape" && onFechar();
-    document.addEventListener("keydown", handler);
-    return () => document.removeEventListener("keydown", handler);
-  }, [onFechar]);
+  UseModalFecharEsc(onFechar);
 
   const abrirPdf = () =>
     window.open(`${API}/uploads/${livro.urlPdf}`, "_blank");
