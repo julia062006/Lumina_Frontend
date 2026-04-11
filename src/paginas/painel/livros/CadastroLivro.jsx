@@ -36,7 +36,7 @@ function CadastrarLivro() {
             const formData = criarFormData({
                 titulo: dados.titulo,
                 descricao: dados.descricao,
-                preco: dados.preco,
+                preco: dados.preco.replace(/[R$\s.]/g, "").replace(",", "."),
                 id_autor: dados.id_autor,
                 id_categoria: dados.id_categoria,
                 destaque: dados.destaque,

@@ -23,13 +23,7 @@ function EditarLivro() {
             navigate("/painel/livros");
             return;
         }
-        setValue("titulo", livro.titulo);
-        setValue("descricao", livro.descricao);
-        setValue("preco", Number(livro.preco).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }));
-        setValue("id_autor", livro.id_autor);
-        setValue("id_categoria", livro.id_categoria);
-        setValue("destaque", String(livro.destaque));
-
+        
         async function carregarSelects() {
             const [resAutores, resCategorias] = await Promise.all([
                 getAutores(),
@@ -37,6 +31,13 @@ function EditarLivro() {
             ]);
             setAutores(resAutores.data);
             setCategorias(resCategorias.data);
+            
+            setValue("titulo", livro.titulo);
+            setValue("descricao", livro.descricao);
+            setValue("preco", Number(livro.preco).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }));
+            setValue("id_autor", livro.id_autor);
+            setValue("id_categoria", livro.id_categoria);
+            setValue("destaque", String(livro.destaque));
         }
         carregarSelects();
     }, [livro]);
