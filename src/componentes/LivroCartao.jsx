@@ -1,17 +1,23 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUsuario } from "../contexto/UsuarioContexto";
 import LivroModal from "./LivroModal";
-import { BotaoPrimario } from "./Botao";
-import { BotaoSecundario } from "./Botao";
-
-
+import { BotaoPrimario, BotaoSecundario } from "./Botao";
 
 const API = "http://localhost:3000";
 
 export default function LivroCartao({ livro }) {
   const [modalAberto, setModalAberto] = useState(false);
+  const { usuario } = useUsuario();
+  const navigate = useNavigate();
 
-  const abrirPdf = () =>
+  const abrirPdf = () => {
+    if (!usuario) {
+      navigate("/entrar");
+      return;
+    }
     window.open(`${API}/uploads/${livro.urlPdf}`, "_blank");
+  };
 
   return (
     <>
