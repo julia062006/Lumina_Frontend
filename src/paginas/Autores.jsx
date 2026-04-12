@@ -18,7 +18,7 @@ function Autores() {
   return (
     <main className="bg-green-50">
       <div className="max-w-6xl mx-auto px-4 py-8">
-      <h1 className="text-4xl font-medium mb-2 text-center">AUTORES</h1>
+      <h1 className="text-4xl font-medium mb-2 text-center tracking-widest text-[#425B98]">AUTORES</h1>
       <p className="text-muted-foreground mb-10 text-center">Explore todos os autores disponíveis</p>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">

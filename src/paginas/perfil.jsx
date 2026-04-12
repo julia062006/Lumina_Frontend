@@ -2,7 +2,7 @@ import { LogOut, Pencil } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useUsuario } from "../contexto/UsuarioContexto";
 import { BotaoPrimario, BotaoSecundario } from "../componentes/Botao";
-import fundo from  "../imagens/planofundo2.png";
+import fundo from "../imagens/planofundo2.png";
 
 function Perfil() {
 
@@ -15,7 +15,7 @@ function Perfil() {
     }
 
     return (
-        <div style={{ backgroundImage: `url(${fundo})` }}className="bg-cover bg-center -mt-6 -mb-24 p-24">
+        <div style={{ backgroundImage: `url(${fundo})` }} className="bg-cover bg-center py-24 pb-24">
             <div className="max-w-md mx-auto p-6 border rounded-lg shadow bg-white">
 
                 <div className="flex items-center justify-between mb-4">
@@ -32,14 +32,13 @@ function Perfil() {
                 </div>
 
                 <div className="flex items-center gap-4 mb-4">
-                   
                     <div className="mt-6">
                         <BotaoPrimario onClick={() => navigate("/painel")}>
                             Acessar painel
                         </BotaoPrimario>
                     </div>
 
-                     <div className="mt-6">
+                    <div className="mt-6">
                         <BotaoSecundario onClick={sair}>
                             <LogOut />
                             Sair da Conta

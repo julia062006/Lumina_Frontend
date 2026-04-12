@@ -41,8 +41,8 @@ function Biblioteca() {
     return (
         <main>
             <div className="p-10 min-h-screen bg-blue-50">
-                <h1 className="text-4xl font-medium mb-2 text-center">
-                    {categoriaId ? "Livros da Categoria" : "BIBLIOTECA"}
+                <h1 className="text-4xl font-medium mb-2 text-center tracking-widest text-[#425B98]">
+                    {categoriaId ? "LIVROS DA CATEGORIA" : "BIBLIOTECA"}
                 </h1>
                 <p className="text-muted-foreground mb-10 text-center">
                     {categoriaId

@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import "./componentes/Rodape.css";
 import Header from "./componentes/Header";
 import Rodape from "./componentes/Rodape";
 import CadastroUsuario from "./paginas/CadastroUsuario";

@@ -14,7 +14,7 @@ function mapearLivroParaCard(livro) {
         author: livro.autor?.nome,
         image: `http://localhost:3000/uploads/${livro.capa_imagem}`,
         description: livro.descricao ?? "",
-        urlPdf: livro.arquivo_pdf ?? "", 
+        urlPdf: livro.arquivo_pdf ?? "",
     };
 }
 
@@ -76,23 +76,28 @@ function Inicio() {
                         backgroundRepeat: "no-repeat, no-repeat"
                     }}>
 
-                    <section id="inicio" className="max-w-2xl pl-8">
-                        <h1 className="text-5xl lg:text-6xl font-medium leading-tight tracking-tight">
-                            Ilumine sua<br />
-                            <span style={{ color: 'var(--lumina-purple)' }}>Leitura</span>
+                    <section id="inicio" className="max-w-2xl pl-8 pb-16">
+                        <h1 className="text-5xl lg:text-6xl font-medium leading-[1.15] tracking-tight">
+                            Ilumine sua <br />
+                            <span style={{ color: 'var(--lumina-purple)' }}>
+                                Leitura
+                            </span>
                         </h1>
 
-                        <p className="text-lg text-muted-foreground max-w-lg mt-4">
-                            Mais do que uma plataforma, a Lumina é o seu portal para conhecimento, imaginação e descoberta.
+                        <p className="text-lg text-muted-foreground max-w-lg mt-6 leading-relaxed">
+                            Mais do que uma plataforma, a Lumina é o seu portal para{' '}
+                            <span className="text-foreground font-medium">conhecimento</span>,{' '}
+                            <span className="text-foreground font-medium">imaginação</span> e{' '}
+                            <span className="text-foreground font-medium">descoberta</span>.
                         </p>
 
                         <div className="flex gap-4 mt-6">
-                            <BotaoPrimario onClick={() => navigate("/biblioteca")}>
+                            <BotaoPrimario onClick={() => navigate("/biblioteca")} className="px-8 py-3 text-base">
                                 Explorar Livros
                             </BotaoPrimario>
                             {!token && (
                                 <Link to="/cadastroUsuario">
-                                    <BotaoSecundario className="!bg-white text-black">Criar Conta</BotaoSecundario>
+                                    <BotaoSecundario className="!bg-white px-8 py-3 text-base">Criar Conta</BotaoSecundario>
                                 </Link>
                             )}
                         </div>
