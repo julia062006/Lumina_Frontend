@@ -35,7 +35,7 @@ function CadastrarCategoria() {
     }
 
     return (
-        <div>
+        <div className="bg-purple-50">
             <Formulario titulo="Cadastrar Categoria" onSubmit={handleSubmit(cadastrar)}>
 
                 <Input

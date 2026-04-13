@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Header from "./componentes/Header";
+import Menu from "./componentes/Menu";
 import Rodape from "./componentes/Rodape";
 import CadastroUsuario from "./paginas/CadastroUsuario";
 import CadastrarAutor from "./paginas/painel/autores/CadastroAutor";
@@ -27,7 +27,7 @@ function App() {
 
   return (
     <div>
-      <Header />
+      <Menu />
 
       <main>
         <Routes>

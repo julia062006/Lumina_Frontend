@@ -24,56 +24,57 @@ function ListarCategorias() {
     }
 
     return (
-        <div className="max-w-4xl mx-auto mt-10 px-4">
-            <div className="flex items-center justify-between mb-6">
-                <h1 className="text-2xl font-semibold">CATEGORIAS</h1>
+        <div className="bg-purple-50 pt-10 pb-16">
+            <div className="max-w-4xl mx-auto mt-10 px-4 pb-16 bg-white rounded-xl p-6">
+                <div className="flex items-center justify-between mb-6">
+                    <h1 className="text-2xl font-semibold">CATEGORIAS</h1>
 
-                <div className="flex gap-2">
-                    <BotaoPrimario onClick={() => navigate("/painel/cadastroCategoria")}>
-                        Cadastrar
-                    </BotaoPrimario>
+                    <div className="flex gap-2">
+                        <BotaoPrimario onClick={() => navigate("/painel/cadastroCategoria")}>
+                            Cadastrar
+                        </BotaoPrimario>
 
-                    <BotaoSecundario type="button" onClick={() => navigate("/painel")}>
-                        Voltar
-                    </BotaoSecundario>
-                </div>
-            </div>
-
-            <Tabela
-                colunas={["Nome", "Descrição", "Destaque"]}
-                dados={categoriasPaginadas}
-
-                renderLinha={(categoria) => (
-                    <>  
-                        <td className="px-4 py-2">{categoria.nome}</td>
-                        <td className="px-4 py-2">{categoria.descricao}</td>
-                        <td className="px-4 py-2">{categoria.destaque === true || categoria.destaque === "true" ? "Sim" : "Não"}</td>
-
-                    </>
-                )}
-
-                renderAcoes={(categoria) => (
-                    <>
-                        <BotaoSecundario onClick={() => navigate(`/painel/editarCategoria/${categoria.id_categoria}`, { state: { categoria } })}>
-                            Editar
+                        <BotaoSecundario type="button" onClick={() => navigate("/painel")}>
+                            Voltar
                         </BotaoSecundario>
+                    </div>
+                </div>
 
-                        <button
-                            onClick={() => excluir(categoria.id_categoria)}
-                            className="text-red-500 hover:underline text-sm"
-                        >
-                            Excluir
-                        </button>
-                    </>
-                )}
-            />
+                <Tabela
+                    colunas={["Nome", "Descrição", "Destaque"]}
+                    dados={categoriasPaginadas}
 
-            <Paginacao
-                totalPaginas={totalPaginas}
-                paginaAtual={paginaAtual}
-                onMudarPagina={setPaginaAtual}
-            />
+                    renderLinha={(categoria) => (
+                        <>
+                            <td className="px-4 py-2">{categoria.nome}</td>
+                            <td className="px-4 py-2">{categoria.descricao}</td>
+                            <td className="px-4 py-2">{categoria.destaque === true || categoria.destaque === "true" ? "Sim" : "Não"}</td>
 
+                        </>
+                    )}
+
+                    renderAcoes={(categoria) => (
+                        <>
+                            <BotaoSecundario onClick={() => navigate(`/painel/editarCategoria/${categoria.id_categoria}`, { state: { categoria } })}>
+                                Editar
+                            </BotaoSecundario>
+
+                            <button
+                                onClick={() => excluir(categoria.id_categoria)}
+                                className="text-red-500 hover:underline text-sm"
+                            >
+                                Excluir
+                            </button>
+                        </>
+                    )}
+                />
+
+                <Paginacao
+                    totalPaginas={totalPaginas}
+                    paginaAtual={paginaAtual}
+                    onMudarPagina={setPaginaAtual}
+                />
+            </div>
         </div>
     );
 }

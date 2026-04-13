@@ -50,7 +50,7 @@ function EditarAutor() {
     if (!autor) return null;
 
     return (
-        <div>
+        <div className="bg-green-50">
             <Formulario titulo="Editar Autor" onSubmit={handleSubmit(salvar)}>
 
                 <Input

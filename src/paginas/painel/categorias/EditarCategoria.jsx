@@ -49,7 +49,7 @@ function EditarCategoria() {
     if (!categoria) return null;
 
     return (
-        <div>
+        <div className="bg-purple-50">
             <Formulario titulo="Editar Categoria" onSubmit={handleSubmit(salvar)}>
 
                 <Input

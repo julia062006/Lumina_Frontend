@@ -15,7 +15,7 @@ export default function LivroModal({ livro, onFechar }) {
       onClick={onFechar}
     >
       <div
-        className="bg-white rounded-2xl max-w-lg w-full p-6 flex gap-5"
+        className="bg-white rounded-2xl max-w-2xl w-full p-6 flex gap-5"
         onClick={(e) => e.stopPropagation()}
       >
         <img
@@ -29,11 +29,11 @@ export default function LivroModal({ livro, onFechar }) {
           <p className="text-sm text-gray-600 leading-relaxed flex-1 overflow-y-auto max-h-40">
             {livro.description}
           </p>
-          <div className="flex gap-2 mt-4">
-            <BotaoPrimario className="flex-1 flex justify-center items-center" onClick={abrirPdf}>
+          <div className="flex gap-2 mt-4 justify-center">
+            <BotaoPrimario className="px-6 flex justify-center items-center" onClick={abrirPdf}>
               Leia agora
             </BotaoPrimario>
-            <BotaoSecundario className="flex-1 flex justify-center items-center" onClick={onFechar}>
+            <BotaoSecundario className="px-6 flex justify-center items-center" onClick={onFechar}>
               Fechar
             </BotaoSecundario>
           </div>

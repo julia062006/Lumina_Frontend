@@ -7,7 +7,7 @@ import { useUsuario } from "../contexto/UsuarioContexto";
 const linkClass =
     "no-underline font-['Inter',sans-serif] text-[#3f3e3e] transition-all duration-200 hover:text-[#7573A8] hover:opacity-70";
 
-export default function Header() {
+export default function Menu() {
     const { token } = useUsuario();
 
     return (

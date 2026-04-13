@@ -14,14 +14,13 @@ function Painel() {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen bg-blue-50">
-            <div className="max-w-4xl mx-auto pt-10 px-4 pb-10">
+        <div className=" bg-blue-50">
+            <div className="max-w-4xl mx-auto pt-24 px-4 pb-24">
 
                 <div className="flex items-center justify-between mb-8">
                     <h1 className="text-2xl font-semibold">PAINEL</h1>
 
-                    <BotaoSecundario 
-                        onClick={() => navigate("/")} className="bg-white">
+                    <BotaoSecundario className="!bg-white"onClick={() => navigate("/")}>
                         Voltar
                     </BotaoSecundario>
                 </div>

@@ -72,7 +72,7 @@ function EditarPerfil() {
         backgroundImage: `url(${fundo})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",}}className="min-h-screen -mt-6 -mb-24 p-24">
+        backgroundRepeat: "no-repeat",}}className="min-h-screen">
             <div>
                 <Formulario titulo="Editar Perfil" onSubmit={handleSubmit(salvar)}>
 
