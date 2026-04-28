@@ -11,15 +11,12 @@ export default function Header() {
     const { token } = useUsuario();
 
     return (
-        <header className="sticky top-0 z-50 w-full border-b border-black/[0.08] bg-white backdrop-blur-md flex items-center">
-            <div className="flex items-center gap-2">
-                <img
-                    className="w-[9%] h-[10%] ml-[100px]"
-                    src={logo}
-                    alt="Logo Lumina"
-                />
-                <h1 className="font-['Inter',sans-serif] text-[#5D5E98] text-2xl font-medium tracking-[0.2em]">
-                    LUMINA
+        <header className="sticky top-0 z-50 w-full border-b border-black/[0.08] bg-white flex items-center justify-between">
+            <div className="flex items-center gap-2 h-16">
+                <h1 className="font-['Inter',sans-serif] text-[#5D5E98] text-2xl font-medium tracking-[0.2em] p-10">
+                    <Link to="/inicio">
+                        LUMINA
+                    </Link>
                 </h1>
             </div>
 
@@ -29,6 +26,8 @@ export default function Header() {
                 <a href="/categorias" className={linkClass}>Categorias</a>
                 <a href="/autores" className={linkClass}>Autores</a>
 
+            </nav>
+            <div className="flex items-center gap-4 pr-10">
                 {token ? (
                     <>
                         <Link to="/perfil">
@@ -40,7 +39,7 @@ export default function Header() {
                         <BotaoSecundario>Entrar</BotaoSecundario>
                     </Link>
                 )}
-            </nav>
+            </div>
         </header>
     );
 }
