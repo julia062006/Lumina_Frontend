@@ -64,7 +64,7 @@ function Entrar() {
     }
 
     return (
-        <div className=" bg-pink-100">
+        <div className=" bg-pink-50">
             <Formulario titulo="Entrar" onSubmit={handleSubmit(entrar)}>
 
                 <Input

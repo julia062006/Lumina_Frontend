@@ -62,7 +62,7 @@ function CadastroUsuario() {
     }
 
     return (
-        <div>
+        <div className="bg-pink-50">
             <Formulario titulo="Faça seu Cadastro" onSubmit={handleSubmit(cadastrar)}>
 
                 <Input

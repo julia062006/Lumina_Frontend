@@ -73,7 +73,7 @@ function EditarLivro() {
     if (!livro) return null;
 
     return (
-        <div>
+        <div className="bg-blue-50">
             <Formulario titulo="Editar Livro" onSubmit={handleSubmit(salvar)}>
 
                 <Input

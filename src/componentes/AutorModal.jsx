@@ -16,7 +16,7 @@ export default function AutorModal({ autor, onFechar }) {
       onClick={onFechar}
     >
       <div
-        className="bg-white rounded-2xl max-w-lg w-full p-6 flex gap-5"
+        className="bg-white rounded-2xl max-w-2xl w-full p-6 flex gap-5"
         onClick={(e) => e.stopPropagation()}
       >
         <img
@@ -29,11 +29,13 @@ export default function AutorModal({ autor, onFechar }) {
           <p className="text-sm text-gray-600 leading-relaxed flex-1 overflow-y-auto max-h-48 mt-2">
             {autor.biografia}
           </p>
+          <div className="flex justify-center">
           <BotaoSecundario
             onClick={onFechar}
-            className="mt-4 px-4 py-1.5 text-sm rounded-xl border border-gray-200 hover:bg-gray-50 transition-colors flex justify-center items-center">
+            className="mt-4 px-4 py-1.5 text-sm rounded-xl border border-gray-200 hover:bg-gray-50 transition-colors flex justify-center items-center w-fit">
                 Fechar
           </BotaoSecundario>
+          </div>
         </div>
       </div>
     </div>

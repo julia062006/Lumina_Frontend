@@ -63,7 +63,7 @@ function CadastrarLivro() {
     }
 
     return (
-        <div>
+        <div className="bg-blue-50">
             <Formulario titulo="Cadastrar Livro" onSubmit={handleSubmit(cadastrar)}>
 
                 <Input
