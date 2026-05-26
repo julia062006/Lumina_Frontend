@@ -144,7 +144,7 @@ function Inicio() {
                     </section>
                 </div>
 
-                <section id="Destaque" className="py-2 bg-muted/30 mt-10">
+                <section id="Destaque" className="py-2 bg-muted/30 mt-10 pb-10">
                     <div className="container mx-auto px-6 lg:px-8">
                         <div className="text-center mb-12">
                             <h2 className="text-3xl lg:text-4xl font-medium mb-4">
